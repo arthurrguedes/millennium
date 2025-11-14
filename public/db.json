@@ -1098,7 +1098,7 @@
   {
     "id": 271,
     "year": 1999,
-    "field": "Rap Field",
+    "field": "R&B, Rap, Soul & Afrobeats Field",
     "category": "Best Rap Album",
     "main_artist": "Dr. Dre",
     "nomination": "2001",
@@ -1330,7 +1330,7 @@
     "director": null,
     "producer": "Chico Neves",
     "technical": null,
-    "songwriters": "Marcelo Yuka & Marcelo Falcão",
+    "songwriters": "Marcelo Yuka, Marcelo Falcão",
     "result": "Winner",
     "nationality": "Brazil",
     "gender": "male"
@@ -1488,7 +1488,7 @@
   {
     "id": 591,
     "year": 1999,
-    "field": "Alternative, Rock & Metal Field",
+    "field": "Visual Media Field",
     "category": "Best Music Video",
     "main_artist": "Bjork",
     "nomination": "All Is Full of Love ",
@@ -1703,7 +1703,7 @@
     "main_artist": "Bon Jovi",
     "nomination": "It’s My Life",
     "director": null,
-    "producer": "Jon Bon Jovi, Luke Ebbin & Richie Sambora",
+    "producer": "Jon Bon Jovi, Luke Ebbin, Richie Sambora",
     "technical": null,
     "songwriters": null,
     "result": "Winner",
@@ -1911,7 +1911,7 @@
     "field": "General Field",
     "category": "Best New Artist",
     "main_artist": "Coldplay",
-    "nomination": "Coldplay",
+    "nomination": null,
     "director": null,
     "producer": null,
     "technical": null,
@@ -2365,7 +2365,7 @@
     "director": null,
     "producer": null,
     "technical": null,
-    "songwriters": "Angie Stone, Ahmir Thompson, Luther Archer & Charlie Huntyer",
+    "songwriters": "Angie Stone, Ahmir Thompson, Luther Archer, Charlie Huntyer",
     "result": "Winner",
     "nationality": "United States",
     "gender": "male"

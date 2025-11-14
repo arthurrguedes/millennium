@@ -8,6 +8,8 @@ import { HomePage } from './pages/HomePage'
 import { AwardsPage } from './pages/AwardsPage.jsx'
 import { YearlyAwardsPage } from './pages/YearlyAwardsPage.jsx'
 import { ArtistPage } from './pages/ArtistPage'
+import { StatsPage } from './pages/StatsPage.jsx'
+import { FieldsPage } from './pages/FieldsPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
       },
       { path: '/artist/:name', 
         element: <ArtistPage /> 
+      },
+      { 
+        path: '/stats', 
+        element: <StatsPage /> 
+      },
+      {
+        path: '/fields', 
+        element: <FieldsPage /> 
       },
     ],
   },

@@ -19,7 +19,8 @@ export function Header() {
         <Link to="/about">About</Link>
         <Link to="/awards">Awards</Link>
         <Link to="/news">News</Link>
-        <Link to="/genres">Genre Fields</Link>
+        <Link to="/fields">Fields</Link>
+        <Link to="/stats">Stats</Link>
       </nav>
       
       <div>

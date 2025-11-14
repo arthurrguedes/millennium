@@ -1,0 +1,122 @@
+/* src/pages/StatsPage.css */
+
+.stats-page-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* --- Cabeçalho (Sem mudanças) --- */
+.stats-page-container .awards-header {
+  margin-bottom: 40px;
+}
+.stats-page-container .awards-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0;
+  color: #000;
+}
+.stats-page-container .awards-header p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* --- Estilos do Accordion (NOVOS) --- */
+.ranking-section-accordion {
+  border-bottom: 2px solid #eee;
+}
+
+.accordion-toggle {
+  /* Reset do botão */
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  
+  /* Layout */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  
+  /* Visual */
+  padding: 15px 5px;
+  transition: color 0.2s;
+}
+
+.accordion-toggle h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0; /* Remove a margem padrão do h2 */
+  transition: color 0.2s;
+}
+
+.accordion-toggle:hover h2,
+.accordion-toggle.active h2 {
+  color: #bfa15f;
+}
+
+.toggle-icon {
+  font-size: 1.5rem;
+  color: #bfa15f;
+  margin-left: 20px;
+}
+
+/* Conteúdo (a lista) */
+.accordion-content {
+  padding: 10px 5px 20px 5px;
+  background-color: #fcfcfc;
+}
+
+
+/* --- Estilos da Lista de Ranking (Modificados) --- */
+.stats-ranking-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stats-ranking-list li {
+  display: flex;
+  align-items: baseline;
+  padding: 15px 10px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 1.2rem;
+}
+
+/* Remove a borda superior que existia antes */
+.stats-ranking-list li:first-child {
+  border-top: none; 
+}
+.stats-ranking-list li:last-child {
+  border-bottom: none;
+}
+
+.stats-ranking-list .rank-number {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #888;
+  width: 40px;
+  flex-shrink: 0;
+}
+
+.stats-ranking-list .artist-name-link {
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+  flex-grow: 1;
+  transition: color 0.2s;
+}
+
+.stats-ranking-list .artist-name-link:hover {
+  color: #bfa15f;
+  text-decoration: underline;
+}
+
+.stats-ranking-list .win-count {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #bfa15f;
+  flex-shrink: 0;
+}
