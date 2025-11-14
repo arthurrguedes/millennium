@@ -1,0 +1,62 @@
+.awards-hub-grid {
+  display: grid;
+  /* Cria colunas responsivas, 2 ou 3 colunas */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.year-card {
+  background-color: #fdfdfd;
+  border: 1px solid #eee;
+  padding: 25px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.year-card h2 {
+  font-size: 2rem;
+  color: #bfa15f; /* Cor dourada */
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.winners-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; /* Faz a lista crescer para empurrar o botão para baixo */
+}
+
+.winners-list li {
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.winners-list li strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.winners-list li span {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.full-list-button {
+  background-color: #222;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px; /* Espaço entre a lista e o botão */
+  transition: background-color 0.2s;
+}
+
+.full-list-button:hover {
+  background-color: #bfa15f;
+  color: #000;
+}

@@ -1,0 +1,242 @@
+/* src/pages/YearlyAwardsPage.css */
+
+.awards-header {
+  margin-bottom: 40px;
+}
+.awards-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0;
+}
+.awards-header p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+.awards-body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 40px;
+}
+
+/* --- Barra Lateral (Esquerda) --- */
+.awards-sidebar {
+  border-right: 1px solid #eee;
+  padding-right: 20px;
+  /* Garante que a barra lateral "grude" ao rolar */
+  position: sticky;
+  top: 100px; /* Ajuste (altura do seu header + margem) */
+  align-self: start; /* Impede que ela estique */
+}
+.awards-sidebar h3 {
+  font-size: 1.1rem;
+  color: #bfa15f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.awards-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ESTILOS MODIFICADOS (de 'a' para 'button') */
+.awards-sidebar li button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 0;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+  
+  /* Reset do estilo de botão */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit; /* Usa a fonte do site */
+}
+.awards-sidebar li button:hover {
+  color: #bfa15f;
+}
+
+/* NOVO ESTILO: para o botão ativo */
+.awards-sidebar li button.active {
+  color: #bfa15f;
+  /* font-weight: 900; (Opcional, se quiser mais destaque) */
+}
+
+
+/* --- Conteúdo (Direita) --- */
+.category-section {
+  margin-bottom: 40px;
+}
+.category-section h4 {
+  font-size: 1.3rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+.category-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.category-section li {
+  padding: 10px 0;
+  border-bottom: 1px solid #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+}
+.category-section li strong {
+  font-size: 1rem;
+}
+.category-section li span {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Estilo do Vencedor (WINNER) */
+.category-section li.winner strong {
+  color: #333;
+}
+.category-section li.winner {
+  font-weight: bold;
+}
+
+/* NOVO ESTILO: para os créditos */
+.nominee-credits {
+  margin-top: -2px;
+  font-size: 0.85rem;
+  color: #555;
+  font-weight: normal; /* Tira o bold caso seja um vencedor */
+}
+.nominee-credits p {
+  margin: 4px 0 0 0; /* Espaçamento pequeno entre os créditos */
+  line-height: 1.3;
+}
+.nominee-credits p strong {
+  color: #000;
+  font-weight: 600; /* Um pouco de destaque para o tipo de crédito */
+  font-size: 0.85rem;
+}
+
+/* Faz os créditos do vencedor se destacarem também */
+.category-section li.winner .nominee-credits {
+  color: #333;
+}
+.category-section li.winner .nominee-credits p strong {
+   color: #bfa15f; /* Dourado */
+}
+
+.nominee-info {
+  display: flex;
+  flex-wrap: wrap; 
+  align-items: baseline; /* Alinha o texto na base */
+  gap: 8px; /* Espaço entre os itens */
+}
+
+/* Adicione o estilo para o novo label de vencedor */
+.winner-label {
+  background-color: #bfa15f; /* Cor Dourada */
+  color: #000; /* Texto Preto */
+  font-weight: bold;
+  font-size: 0.65rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.filter-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.filter-toggle label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.filter-toggle input[type="checkbox"] {
+  /* Estilo simples de checkbox */
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  /* Melhora o visual do checkbox */
+  accent-color: #bfa15f;
+}
+
+.awards-sidebar h3 {
+  /* ... (estilos existentes de h3) ... */
+  font-size: 1.1rem;
+  color: #bfa15f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0; /* Remove margem extra se for o primeiro h3 */
+}
+
+.nominee-credits a, 
+.nominee-info a {
+  color: inherit; /* Esta é a mudança principal! */
+  text-decoration: none; /* Remove o sublinhado padrão */
+}
+
+/* Adiciona um sublinhado sutil APENAS ao passar o mouse */
+.nominee-credits a:hover, 
+.nominee-info a:hover {
+  text-decoration: underline; /* Mostra que é clicável */
+}
+
+/* Garante que o <strong> dentro do link mantenha o negrito */
+.nominee-info a strong {
+    font-weight: bold;
+}
+
+/* Garante que o <strong> (Artist, Producer) nos créditos tenha o estilo correto */
+.nominee-credit-line strong {
+    color: #000;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-right: 5px; /* Espaço entre o rótulo e os nomes */
+}
+
+/* Garante que os vencedores mantenham a cor dourada, mesmo sendo links */
+.category-section li.winner .nominee-info a {
+    color: #bfa15f;
+}
+.category-section li.winner .nominee-credit-line strong {
+    color: #bfa15f;
+}
+.category-section li.winner .nominee-credits a {
+    color: inherit; /* Herda o preto do pai .nominee-credits */
+}
+.category-section li.winner .nominee-credits a:hover {
+    color: #bfa15f; /* Fica dourado no hover */
+}
+
+/* NOVO ESTILO: para o link em negrito do artista */
+.nominee-info a.bold-link {
+  font-weight: bold;
+}
+
+/* Garante que o <strong> (Producer, etc.) tenha o estilo correto */
+.nominee-credit-line strong {
+    color: #000;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* Garante que os vencedores mantenham a cor dourada, mesmo sendo links */
+.category-section li.winner .nominee-info a.bold-link {
+    color: #bfa15f;
+    font-weight: bold;
+}

@@ -1,23 +1,25 @@
+import { Link } from 'react-router-dom'
+
 export function Header() {
   return (
     <header>
-      <div className="brand">
+      <Link to="/" className="brand">
         <img 
           src="/mlna logo.PNG" 
           alt="Millennium Awards Logo" 
           style={{ maxHeight: '45px', objectFit: 'contain' }} 
         />
-      </div>
+      </Link>
       
       <div style={{ fontWeight: 'bold' }}>
         The 2025 Millennium Awards Nominations
       </div>
       
       <nav className="nav-links">
-        <a href="#">About</a>
-        <a href="#">Awards</a>
-        <a href="#">News</a>
-        <a href="#">Genre Fields</a>
+        <Link to="/about">About</Link>
+        <Link to="/awards">Awards</Link>
+        <Link to="/news">News</Link>
+        <Link to="/genres">Genre Fields</Link>
       </nav>
       
       <div>
