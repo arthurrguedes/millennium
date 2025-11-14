@@ -3,6 +3,8 @@ import { Header } from './components/Header'
 import { HeroColumn } from './components/HeroColumn'
 import { TopListColumn } from './components/TopListColumn'
 import { Footer } from './components/Footer'
+import { CategoryGrid } from './components/CategoryGrid'
+import { HorizontalList } from './components/HorizontalList'
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           title="2025 Album Of The Year Nominees" 
         />
       </main>
+      <CategoryGrid />
+      <HorizontalList />
       <Footer />
     </div>
   )
