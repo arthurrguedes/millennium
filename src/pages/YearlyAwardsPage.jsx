@@ -2,51 +2,35 @@ import React, { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import './YearlyAwardsPage.css'
 
-/**
- * Converte um campo de crédito (string ou objeto) em uma string única 
- * de nomes separados por vírgula.
- * Ex: { "Master Engineers": ["Matt Colton"] } => "Matt Colton"
- * Ex: "Produtor 1, Produtor 2" => "Produtor 1, Produtor 2"
- */
+// (A função flattenCreditsToString permanece a mesma, pois ainda é usada
+// por 'RenderCredits' e outras páginas)
 function flattenCreditsToString(creditData) {
   if (!creditData) {
-    return null; // Retorna nulo se a entrada for nula
+    return null; 
   }
-  
-  // Caso 1: Já é uma string (o formato antigo)
   if (typeof creditData === 'string') {
     return creditData;
   }
-
-  // Caso 2: É um objeto (o novo formato)
   if (typeof creditData === 'object' && !Array.isArray(creditData)) {
     const allNames = [];
-    // Pega todas as chaves (ex: "Master Engineers", "Sound Engineers")
     const roles = Object.keys(creditData); 
-    
     for (const role of roles) {
       const names = creditData[role];
-      
-      // Se a chave tiver um array de nomes (ex: ["Matt Colton"])
       if (Array.isArray(names)) {
         allNames.push(...names);
       }
-      // Se a chave tiver uma string de nomes (ex: "Name1, Name2")
       else if (typeof names === 'string') {
         allNames.push(...names.split(',').map(n => n.trim()));
       }
     }
-    
-    // Filtra nomes vazios/nulos e junta em uma string
     const validNames = allNames.filter(name => name && name.trim());
     if (validNames.length === 0) return null;
     return validNames.join(', ');
   }
-  
-  // Retorno padrão se não for um tipo esperado
   return null; 
 }
 
+// (A função getEditionTitle permanece a mesma)
 function getEditionTitle(year) {
   const numericYear = parseInt(year, 10)
   const edition = numericYear - 1999 + 1
@@ -58,16 +42,12 @@ function getEditionTitle(year) {
   return `${edition}${suffix} Millennium Awards`
 }
 
+// (A função RenderCredits permanece a mesma)
 function RenderCredits({ label, namesString, showLabel = true, isBold = false }) {
-  // 1. Converte o prop (que pode ser um objeto) em uma string
   const flatNamesString = flattenCreditsToString(namesString);
-  
-  // 2. Usa a nova string 'flatNamesString' na verificação
   if (!flatNamesString || typeof flatNamesString !== 'string' || flatNamesString === '—') {
     return null;
   }
-  
-  // 3. Usa a nova string 'flatNamesString' para o .split()
   const namesArray = flatNamesString.split(',').map(name => name.trim());
 
   return (
@@ -89,7 +69,61 @@ function RenderCredits({ label, namesString, showLabel = true, isBold = false })
   );
 }
 
+// --- 1. CRIAR NOVO COMPONENTE PARA CRÉDITOS TÉCNICOS ---
+function RenderTechnicalCredits({ technicalObject }) {
+  // Se 'technical' não for um objeto (ou for nulo/array), não renderiza nada
+  if (!technicalObject || typeof technicalObject !== 'object' || Array.isArray(technicalObject)) {
+    return null;
+  }
+
+  // Pega as chaves do objeto (ex: "Master Engineers", "Sound Engineers")
+  const roles = Object.keys(technicalObject);
+
+  return (
+    <div className="technical-credits-object">
+      <strong>Technical(s):</strong>
+      {roles.map(role => {
+        const names = technicalObject[role];
+        
+        // Converte os nomes (seja array, string, ou nulo) para um array limpo
+        let namesArray = [];
+        if (Array.isArray(names)) {
+          namesArray = names;
+        } else if (typeof names === 'string' && names !== '—') {
+          namesArray = names.split(',').map(n => n.trim());
+        }
+
+        // Se não houver nomes para este papel, não renderiza a linha
+        if (namesArray.length === 0) {
+          return null;
+        }
+
+        // Formata "Master Engineers" para "Master Engineer(s)"
+        const formattedRole = role.replace(/s$/, '(s)');
+
+        // Renderiza a linha de crédito (ex: Master Engineer(s): Matt Colton)
+        return (
+          <p key={role} className="nominee-credit-line technical-role">
+            <strong className="role-label">{formattedRole}:</strong>
+            {' '} 
+            {namesArray.map((name, index) => (
+              <React.Fragment key={name}>
+                {index > 0 && ', '}
+                <Link to={`/artist/${encodeURIComponent(name)}`}>
+                  {name}
+                </Link>
+              </React.Fragment>
+            ))}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
+
 export function YearlyAwardsPage() {
+  // (O topo da função, estados e useEffects permanecem os mesmos)
   const [allData, setAllData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [fields, setFields] = useState([])
@@ -145,6 +179,7 @@ export function YearlyAwardsPage() {
 
   return (
     <div className="awards-page-container">
+      {/* (O header e o sidebar permanecem os mesmos) */}
       <div className="awards-header">
         <h1>{getEditionTitle(selectedYear)}</h1>
         <p>Honoring the best in music from {selectedYear}</p>
@@ -192,11 +227,10 @@ export function YearlyAwardsPage() {
               <ul>
                 {nominees.map((nom) => {
 
-                  // Verifica se é um prêmio de achievement
+                  // (Lógica do Achievement Field permanece a mesma)
                   if (nom.field === 'Achievement Field' && nom.defining_awards) {
                     return (
                       <li key={nom.id} className="winner achievement-award">
-                        {/* Homenageado Principal */}
                         <div className="nominee-info">
                           <RenderCredits 
                             namesString={nom.main_artist} 
@@ -225,7 +259,7 @@ export function YearlyAwardsPage() {
                     );
                   }
 
-                  // --- LÓGICA ANTIGA (para prêmios normais) ---
+                  // (Lógica de prêmios normais)
                   const isArtistCategory =
                     nom.category === 'Artist of the Year' ||
                     nom.category === 'Best New Artist';
@@ -257,7 +291,15 @@ export function YearlyAwardsPage() {
                           <RenderCredits label="Producer(s)" namesString={nom.producer} />
                           <RenderCredits label="Songwriter(s)" namesString={nom.songwriters} />
                           <RenderCredits label="Director(s)" namesString={nom.director} />
-                          <RenderCredits label="Technical(s)" namesString={nom.technical} />
+                          
+                          {/* --- 2. SUBSTITUIR O RENDERCREDITS ANTIGO --- */}
+                          {nom.category === 'Best Engineered Album' ? (
+                            <RenderTechnicalCredits technicalObject={nom.technical} />
+                          ) : (
+                            <RenderCredits label="Technical(s)" namesString={nom.technical} />
+                          )}
+                          {/* --- FIM DA MODIFICAÇÃO --- */}
+
                         </div>
                       )}
                     </li>

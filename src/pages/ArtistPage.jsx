@@ -1,66 +1,36 @@
-// src/pages/ArtistPage.jsx
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import './ArtistPage.css'
+import './ArtistPage.css' //
 
-const MAIN_CATEGORIES = [
-  'Album of the Year',
-  'Record of the Year',
-  'Artist of the Year',
-  'Song of the Year',
-  'Best New Artist',
-  'Best Collaboration'
-];
-
-/**
- * Converte um campo de crédito (string ou objeto) em uma string única 
- * de nomes separados por vírgula.
- * Ex: { "Master Engineers": ["Matt Colton"] } => "Matt Colton"
- * Ex: "Produtor 1, Produtor 2" => "Produtor 1, Produtor 2"
- */
+// (As 4 funções helper: flattenCreditsToString, hasExactArtist, isArtistCredited, countCredits)
 function flattenCreditsToString(creditData) {
   if (!creditData) {
-    return null; // Retorna nulo se a entrada for nula
+    return null; 
   }
-  
-  // Caso 1: Já é uma string (o formato antigo)
   if (typeof creditData === 'string') {
     return creditData;
   }
-
-  // Caso 2: É um objeto (o novo formato)
   if (typeof creditData === 'object' && !Array.isArray(creditData)) {
     const allNames = [];
-    // Pega todas as chaves (ex: "Master Engineers", "Sound Engineers")
     const roles = Object.keys(creditData); 
-    
     for (const role of roles) {
       const names = creditData[role];
-      
-      // Se a chave tiver um array de nomes (ex: ["Matt Colton"])
       if (Array.isArray(names)) {
         allNames.push(...names);
       }
-      // Se a chave tiver uma string de nomes (ex: "Name1, Name2")
       else if (typeof names === 'string') {
         allNames.push(...names.split(',').map(n => n.trim()));
       }
     }
-    
-    // Filtra nomes vazios/nulos e junta em uma string
     const validNames = allNames.filter(name => name && name.trim());
     if (validNames.length === 0) return null;
     return validNames.join(', ');
   }
-  
-  // Retorno padrão se não for um tipo esperado
   return null; 
 }
 
-// Função auxiliar (sem alterações)
 function hasExactArtist(namesString, nameToFind) {
   const flatNamesString = flattenCreditsToString(namesString);
-  
   if (!flatNamesString || flatNamesString === '—') {
     return false;
   }
@@ -68,7 +38,6 @@ function hasExactArtist(namesString, nameToFind) {
   return namesArray.includes(nameToFind);
 }
 
-// Função de verificação (para a LISTA)
 function isArtistCredited(item, nameToFind) {
   if (hasExactArtist(item.main_artist, nameToFind) ||
       hasExactArtist(item.producer, nameToFind) ||
@@ -89,11 +58,8 @@ function isArtistCredited(item, nameToFind) {
   return false;
 }
 
-// --- NOVA FUNÇÃO HELPER (para os CONTADORES) ---
-// Esta função conta os CRÉDITOS para um artista específico
 function countCredits(item, nameToFind) {
   let count = 0;
-  
   if (hasExactArtist(item.main_artist, nameToFind)) count++;
   if (hasExactArtist(item.producer, nameToFind)) count++;
   if (hasExactArtist(item.songwriters, nameToFind)) count++;
@@ -110,62 +76,53 @@ function countCredits(item, nameToFind) {
   return count;
 }
 
+const MAIN_CATEGORIES = [
+  'Album of the Year', 'Record of the Year', 'Artist of the Year',
+  'Song of the Year', 'Best New Artist', 'Best Collaboration'
+];
 
 export function ArtistPage() {
-  const [allNominations, setAllNominations] = useState([]) // Para a lista
+  const [allNominations, setAllNominations] = useState([]) 
   const [loading, setLoading] = useState(true)
   const { name } = useParams()
   const artistName = decodeURIComponent(name)
   const [openYears, setOpenYears] = useState([])
 
-  // --- NOVOS ESTADOS PARA OS CONTADORES ---
   const [totalNominations, setTotalNominations] = useState(0);
   const [totalWins, setTotalWins] = useState(0);
   const [mainCategoryWins, setMainCategoryWins] = useState(0);
+  const [showWinnersOnly, setShowWinnersOnly] = useState(false);
 
-
-  // --- useEffect MODIFICADO ---
   useEffect(() => {
     fetch('/db.json')
       .then((res) => res.json())
       .then((data) => {
         
-        // 1. Filtrar as LINHAS para a lista "All Nominations"
         const nominationLines = data.filter(item => isArtistCredited(item, artistName));
         setAllNominations(nominationLines);
 
-        // 2. Calcular os CONTADORES (nova lógica)
         let nomCount = 0;
         let winCount = 0;
         let generalWinCount = 0;
 
-        // Iteramos sobre todos os dados
         for (const item of data) {
-          // Contamos quantos créditos o artista tem nesta linha
           const creditsInThisNom = countCredits(item, artistName);
           
           if (creditsInThisNom > 0) {
-            // Adiciona ao total de indicações
             nomCount += creditsInThisNom;
-            
-            // Se for uma vitória, adiciona ao total de vitórias
             if (item.result === 'Winner') {
               winCount += creditsInThisNom;
             }
-            
-            // Se for uma vitória de General Field, adiciona
             if (item.result === 'Winner' && MAIN_CATEGORIES.includes(item.category)) {
               generalWinCount += creditsInThisNom;
             }
           }
         }
         
-        // Define os estados dos contadores
         setTotalNominations(nomCount);
         setTotalWins(winCount);
         setMainCategoryWins(generalWinCount);
 
-        // Define os anos para o accordion
         const yearsFromNoms = [...new Set(nominationLines.map(n => n.year.toString()))];
         setOpenYears(yearsFromNoms); 
         
@@ -173,9 +130,11 @@ export function ArtistPage() {
       })
   }, [artistName])
 
-  // O resto do componente (agrupamento, toggle, JSX) permanece o mesmo
+  const filteredNominations = showWinnersOnly
+    ? allNominations.filter(nom => nom.result === 'Winner')
+    : allNominations;
 
-  const nominationsByYear = allNominations
+  const nominationsByYear = filteredNominations
     .sort((a, b) => b.year - a.year)
     .reduce((acc, nom) => {
       const year = nom.year
@@ -203,7 +162,6 @@ export function ArtistPage() {
     <div className="artist-page-container">
       <h1>{artistName}</h1>
 
-      {/* Os contadores agora vêm direto do estado */}
       <div className="artist-stats">
         <div className="stat-box">
           <span>{totalNominations}</span>
@@ -219,31 +177,58 @@ export function ArtistPage() {
         </div>
       </div>
 
+      <div className="filter-toggle-artist">
+        <label htmlFor="winnersOnly">Show Winners Only</label>
+        <input
+          type="checkbox"
+          id="winnersOnly"
+          checked={showWinnersOnly}
+          onChange={(e) => setShowWinnersOnly(e.target.checked)}
+        />
+      </div>
+
       <div className="artist-nomination-list">
         <h2>All Nominations</h2>
         
-        {Object.entries(nominationsByYear).map(([year, nominations]) => (
-          <div key={year} className="year-group">
-            <button className="year-toggle" onClick={() => toggleYear(year)}>
-              <h3>{year}</h3>
-              <span className="toggle-icon">
-                {openYears.includes(year) ? '▾' : '▸'}
-              </span>
-            </button>
-            
-            {openYears.includes(year) && (
-              <ul>
-                {nominations.map(nom => (
-                  <li key={nom.id} className={nom.result === 'Winner' ? 'winner' : ''}>
-                    <strong>{nom.category}</strong>
-                    <span>{nom.main_artist} - "{nom.nomination}"</span>
-                    <Link to={`/awards/${year}`} className="year-link">See year</Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
+        {Object.entries(nominationsByYear).map(([year, nominations]) => {
+          
+          const nomsInYear = nominations.length;
+          const winsInYear = nominations.filter(n => n.result === 'Winner').length;
+
+          return (
+            <div key={year} className="year-group">
+              <button className="year-toggle" onClick={() => toggleYear(year)}>
+                {/* Div wrapper para o h3 e contadores */}
+                <div className="year-toggle-header">
+                  <h3>{year}</h3>
+                  <div className="year-counters">
+                    <span className="noms-count">{nomsInYear} Nominations</span>
+                    {/* Só mostra vitórias se houver alguma */}
+                    {winsInYear > 0 && (
+                      <span className="wins-count">{winsInYear} Wins</span>
+                    )}
+                  </div>
+                </div>
+                
+                <span className="toggle-icon">
+                  {openYears.includes(year) ? '▾' : '▸'}
+                </span>
+              </button>
+              
+              {openYears.includes(year) && (
+                <ul>
+                  {nominations.map(nom => (
+                    <li key={nom.id} className={nom.result === 'Winner' ? 'winner' : ''}>
+                      <strong>{nom.category}</strong>
+                      <span>{nom.nomination}</span>
+                      <Link to={`/awards/${year}`} className="year-link">See year</Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   )

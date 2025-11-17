@@ -1,0 +1,227 @@
+.category-page-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.category-header {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.category-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+}
+
+/* --- Seção de Recordistas --- */
+.record-holder-box {
+  background-color: #fdfdf5;
+  border: 1px solid #f0e6c8;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.record-holder-box h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+  color: #bfa15f;
+  border-bottom: 1px solid #f0e6c8;
+  padding-bottom: 10px;
+}
+
+.record-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.record-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 1.1rem;
+  padding: 8px 0;
+  border-bottom: 1px solid #f9f9f0;
+}
+.record-list li:last-child {
+  border-bottom: none;
+}
+
+.record-list li a {
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+}
+.record-list li a:hover {
+  text-decoration: underline;
+  color: #bfa15f;
+}
+
+.record-list li span {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #bfa15f;
+}
+
+/* --- Seção do Histórico (Estilos de ArtistPage/YearlyAwardsPage) --- */
+.category-history-list h2 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.year-group {
+  margin-bottom: 15px;
+}
+
+.year-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  text-align: left;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.year-toggle-header {
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.year-toggle h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #bfa15f;
+  transition: color 0.2s;
+}
+
+.year-toggle:hover h3 {
+  color: #333; 
+}
+
+.toggle-icon {
+  font-size: 1.2rem;
+  color: #bfa15f;
+}
+
+/* Lista de indicados (estilos de YearlyAwardsPage) */
+.category-nominee-list {
+  list-style: none;
+  padding: 10px 0 0 0;
+  margin: 0;
+}
+
+.category-nominee-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+}
+
+.category-nominee-list li.winner {
+  font-weight: bold;
+}
+
+.nominee-info {
+  display: flex;
+  flex-wrap: wrap; 
+  align-items: baseline;
+  gap: 8px;
+}
+
+.nominee-info a.bold-link {
+  font-weight: bold;
+}
+.category-nominee-list li.winner .nominee-info a.bold-link {
+    color: #bfa15f;
+    font-weight: bold;
+}
+
+.winner-label {
+  background-color: #bfa15f;
+  color: #000;
+  font-weight: bold;
+  font-size: 0.65rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.nominee-credits {
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #555;
+  font-weight: normal; 
+}
+
+.nominee-credits p {
+  margin: 4px 0 0 0;
+  line-height: 1.3;
+}
+
+.nominee-credits a {
+  color: inherit;
+  text-decoration: none;
+}
+.nominee-credits a:hover {
+  text-decoration: underline;
+}
+
+.nominee-credit-line strong {
+    color: #000;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.category-nominee-list li.winner .nominee-credits {
+  color: #333;
+}
+.category-nominee-list li.winner .nominee-credit-line strong {
+   color: #bfa15f;
+}
+.category-nominee-list li.winner .nominee-credits a {
+    color: inherit;
+}
+.category-nominee-list li.winner .nominee-credits a:hover {
+    color: #bfa15f;
+}
+
+/* Estilos de Créditos Técnicos (copiados) */
+.technical-credits-object { margin-top: 4px; }
+.technical-credits-object > strong.technical-main-label {
+  color: #000;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 5px;
+}
+.nominee-credit-line.technical-role { margin-left: 10px; margin-top: 2px; }
+.technical-role .role-label {
+  color: #555;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-right: 5px;
+}
+.technical-role a { font-weight: normal; }
+.category-nominee-list li.winner .technical-credits-object > strong.technical-main-label { color: #bfa15f; }
+.category-nominee-list li.winner .technical-role .role-label { color: #bfa15f; }
+.category-nominee-list li.winner .technical-role a { color: #333; font-weight: normal; }
+.category-nominee-list li.winner .technical-role a:hover { color: #bfa15f; }

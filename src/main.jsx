@@ -10,6 +10,7 @@ import { YearlyAwardsPage } from './pages/YearlyAwardsPage.jsx'
 import { ArtistPage } from './pages/ArtistPage'
 import { StatsPage } from './pages/StatsPage.jsx'
 import { FieldsPage } from './pages/FieldsPage.jsx'
+import { CategoryPage } from './pages/CategoryPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: '/fields', 
         element: <FieldsPage /> 
+      },
+      { 
+        path: '/category/:name', 
+        element: <CategoryPage /> 
       },
     ],
   },

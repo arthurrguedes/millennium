@@ -310,3 +310,56 @@
   font-size: 0.8rem; /* Rótulo menor */
   color: #bfa15f; /* Rótulo dourado */
 }
+
+/* Container para os créditos técnicos com papéis */
+.technical-credits-object {
+  margin-top: 4px;
+}
+
+/* Rótulo "Technical(s):" principal */
+.technical-credits-object > strong {
+  color: #000;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Linha de crédito para um papel específico (ex: Master Engineer(s)) */
+.nominee-credit-line.technical-role {
+  margin-left: 10px; /* Adiciona um recuo */
+  margin-top: 2px;
+}
+
+/* Rótulo do papel (ex: "Master Engineer(s):") */
+.technical-role .role-label {
+  color: #555; /* Cor mais suave para o sub-rótulo */
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-right: 5px;
+}
+
+/* Garante que os links dentro dos papéis não sejam negritos */
+.technical-role a {
+  font-weight: normal;
+}
+
+/* --- Estilos para Vencedores --- */
+
+/* Rótulo "Technical(s):" principal (Vencedor) */
+.category-section li.winner .technical-credits-object > strong {
+  color: #bfa15f; /* Dourado */
+}
+
+/* Rótulo do papel (Vencedor) */
+.category-section li.winner .technical-role .role-label {
+  color: #bfa15f; /* Dourado */
+}
+
+/* Links (Vencedor) */
+.category-section li.winner .technical-role a {
+  color: #333; /* Texto preto normal, já que o <li> pai é 'bold' */
+  font-weight: normal; /* Sobrescreve o 'bold' do <li> */
+}
+
+.category-section li.winner .technical-role a:hover {
+  color: #bfa15f;
+}

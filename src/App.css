@@ -35,7 +35,7 @@ header {
 
 .nav-links {
   display: flex;
-  gap: 50px;
+  gap: 25px;
   font-weight: bold;
   font-size: 0.9rem;
 }
@@ -258,4 +258,68 @@ h1 {
   .category-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* O container do item de navegação */
+.nav-item.dropdown {
+  position: relative; /* Essencial para o posicionamento do menu */
+}
+
+/* O texto que aciona o dropdown (para parecer um link) */
+.dropdown-toggle {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #000;
+  cursor: pointer; /* Indica que é interativo */
+  transition: color 0.2s;
+}
+
+/* O menu suspenso (escondido por padrão) */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0; /* Alinha à esquerda */
+  background-color: #fff;
+  border: 1px solid #eee;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px; /* Espaço interno */
+  padding-top: 20px; /* (10px originais + 10px de espaço do antigo margin-top) */
+  margin-top: 1px; /* Move o menu 10px para cima para "encostar" no header */
+  z-index: 2000;
+  max-height: 50vh;
+  overflow-y: auto;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 250px;
+}
+
+.nav-item.dropdown:hover .dropdown-menu,
+.dropdown-toggle:hover + .dropdown-menu {
+  display: flex; /* Mostra o menu */
+}
+
+.dropdown-menu a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.2s, color 0.2s;
+  white-space: nowrap; /* Impede que os nomes das categorias quebrem linha */
+}
+
+.dropdown-menu a:hover {
+  background-color: #f5f5f5;
+  color: #bfa15f;
+}
+
+.dropdown-loading {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  color: #999;
 }
