@@ -30,7 +30,11 @@ export function Header() {
       </Link>
       
       <div style={{ fontWeight: 'bold' }}>
+        <nav>
+        <Link to="http://localhost:5173/awards/2025" className="nav-link-2025">
         The 2025 Millennium Awards Nominations
+        </Link>
+        </nav>
       </div>
       
       <nav className="nav-links">

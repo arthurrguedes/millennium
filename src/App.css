@@ -323,3 +323,14 @@ h1 {
   padding: 8px 12px;
   color: #999;
 }
+
+/* Note o hífen no nome e o 'a' depois */
+.nav-link-2025 {
+  color: black !important;
+  text-decoration: none !important;
+}
+
+/* Para garantir que não fique roxo se já foi clicado */
+.nav-link-2025 a:visited {
+  color: black !important;
+}
