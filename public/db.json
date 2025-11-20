@@ -61490,7 +61490,7 @@
     "id": 1778,
     "year": 2025,
     "field": "Latín & Global Field",
-    "category": "Best Latín Reg. Album",
+    "category": "Best Latín Regional Album",
     "main_artist": "Carin Leon",
     "nomination": "Palabra de To's",
     "director": null,
@@ -61505,7 +61505,7 @@
     "id": 1779,
     "year": 2025,
     "field": "Latín & Global Field",
-    "category": "Best Latín Reg. Album",
+    "category": "Best Latín Regional Album",
     "main_artist": "Fuerza Regida",
     "nomination": "111xpantia",
     "director": null,
@@ -61520,7 +61520,7 @@
     "id": 1780,
     "year": 2025,
     "field": "Latín & Global Field",
-    "category": "Best Latín Reg. Album",
+    "category": "Best Latín Regional Album",
     "main_artist": "Gaby Amarantos",
     "nomination": "Rock Doido",
     "director": null,
@@ -61535,7 +61535,7 @@
     "id": 1781,
     "year": 2025,
     "field": "Latín & Global Field",
-    "category": "Best Latín Reg. Album",
+    "category": "Best Latín Regional Album",
     "main_artist": "Getúlio Abelha",
     "nomination": "Autópsia",
     "director": null,
@@ -61550,7 +61550,7 @@
     "id": 1782,
     "year": 2025,
     "field": "Latín & Global Field",
-    "category": "Best Latín Reg. Album",
+    "category": "Best Latín Regional Album",
     "main_artist": "João Gomes, Mestrinho, Jota.pê",
     "nomination": "Dominguinho",
     "director": null,
@@ -63940,7 +63940,20 @@
     "nomination": "Diamantes, Lágrimas e Rostos Para Esquecer",
     "director": null,
     "producer": null,
-    "technical": "Assistants: Enzo Vitorio, Raphael Rui Castro | Mixing: - | Sound: William Luna Jr. | Master: Luna Beccaris",
+    "technical": {
+      "assistants": [
+        "Enzo Vitorio",
+        "Raphael Rui Castro"
+      ],
+      "soundEngineers": [
+        "William Luna Jr."
+      ],
+      "mixingEngineers": [
+      ],
+      "masteringEngineers": [
+        "Luna Beccaris"
+      ]
+    },
     "songwriters": null,
     "result": "Nominated",
     "nationality": null,
@@ -63955,7 +63968,32 @@
     "nomination": "Sable, Fable",
     "director": null,
     "producer": null,
-    "technical": "Asher Weisberg, assistant; Ian Gold, Kyle Parker Smith, BJ Burton, Javier Martinez Cruces, Tofer Brown, Justin Vernon, Vic Steffens, Brian Joseph, Joe Richmond, sound engineers; David Wrench, Keiron Beardmore, Matt Wolach, Mark Stent, Shawn Everett, mixing engineers; Heba Kadry, master engineer",
+    "technical": {
+      "assistants": [
+        "Asher Weisberg"
+      ],
+      "soundEngineers": [
+        "Ian Gold", 
+        "Kyle Parker Smith", 
+        "BJ Burton", 
+        "Javier Martinez Cruces", 
+        "Tofer Brown", 
+        "Justin Vernon", 
+        "Vic Steffens", 
+        "Brian Joseph", 
+        "Joe Richmond"
+      ],
+      "mixingEngineers": [
+        "David Wrench", 
+        "Keiron Beardmore", 
+        "Matt Wolach", 
+        "Mark Stent", 
+        "Shawn Everett"
+      ],
+      "masteringEngineers": [
+        "Heba Kadry"
+      ]
+    },
     "songwriters": null,
     "result": "Nominated",
     "nationality": null,
@@ -63970,7 +64008,32 @@
     "nomination": "Eusexua",
     "director": null,
     "producer": null,
-    "technical": "Katie Harvey, Noah McCorkle, Anthony Vilchis, Trey Station, Zach Pereyra, F.R David, assistants; Jonny Leslie, Joseph Hartwell Jones, Lewis Roberts, Falko Duczmal, Peter Walsh, Noah Madrid, Brad Lauchert sound engineers; Manny Marroquin, Jon Castelli, mixing engineers; Dale Becker, master engineer",
+    "technical": {
+      "assistants": [
+        "Katie Harvey", 
+        "Noah McCorkle", 
+        "Anthony Vilchis", 
+        "Trey Station", 
+        "Zach Pereyra", 
+        "F.R David"
+      ],
+      "soundEngineers": [
+        "Jonny Leslie",
+        "Joseph Hartwell Jones", 
+        "Lewis Roberts", 
+        "Falko Duczmal", 
+        "Peter Walsh", 
+        "Noah Madrid", 
+        "Brad Lauchert"
+      ],
+      "mixingEngineers": [
+        "Manny Marroquin", 
+        "Jon Castelli"
+      ],
+      "masteringEngineers": [
+        "Dale Becker"
+      ]
+    },
     "songwriters": null,
     "result": "Nominated",
     "nationality": null,
@@ -63985,7 +64048,30 @@
     "nomination": "GNX",
     "director": null,
     "producer": null,
-    "technical": "- assistants; Johnathan Turner, Laura Sisk, Ray Charles Brown Jr., Jack Antonoff, Dani Perez, Jack Manning, Sebastian Owen Jones, Tony Shepperd, Jozef Caldwell, Tony Austin, Zem Audu, Joey Miller, sound engineers; Oli Jacobs, mixing engineers; Ruairi O'Flaherty, master engineer",
+    "technical": {
+      "assistants": [
+      ],
+      "soundEngineers": [
+        "Johnathan Turner", 
+        "Laura Sisk", 
+        "Ray Charles Brown Jr.", 
+        "Jack Antonoff", 
+        "Dani Perez", 
+        "Jack Manning", 
+        "Sebastian Owen Jones", 
+        "Tony Shepperd", 
+        "Jozef Caldwell", 
+        "Tony Austin", 
+        "Zem Audu", 
+        "Joey Miller"
+      ],
+      "mixingEngineers": [
+        "Oli Jacobs"
+      ],
+      "masteringEngineers": [
+        "Ruairi O'Flaherty"
+      ]
+    },
     "songwriters": null,
     "result": "Nominated",
     "nationality": null,
@@ -64000,7 +64086,26 @@
     "nomination": "Mayhem",
     "director": null,
     "producer": null,
-    "technical": "- assistants; Paul Lamalfa, Charles Moniz, Marco Sonzini, Tyler Harris, Tyler Harris, Tommy Turner, Nick Hodges, Alex Resoagli, sound engineers; Serban Ghenea, Bryce Bordone, mixing engineers; Randy Merrill, master engineer",
+    "technical": {
+      "assistants": [
+      ],
+      "soundEngineers": [
+        "Paul Lamalfa", 
+        "Charles Moniz", 
+        "Marco Sonzini", 
+        "Tyler Harris", 
+        "Tommy Turner", 
+        "Nick Hodges", 
+        "Alex Resoagli"
+      ],
+      "mixingEngineers": [
+        "Serban Ghenea", 
+        "Bryce Bordone"
+      ],
+      "masteringEngineers": [
+        "Randy Merrill"
+      ]
+    },
     "songwriters": null,
     "result": "Nominated",
     "nationality": null,
