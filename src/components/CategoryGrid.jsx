@@ -28,7 +28,7 @@ export function CategoryGrid() {
         <CategoryItem category="RECORD OF THE YEAR" nomination="Die With A Smile" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/23425459b73eac17b203119b55814c89.jpg" />
         <CategoryItem category="ARTIST OF THE YEAR" nomination="Sabrina Carpenter" imageUrl="https://lastfm.freetls.fastly.net/i/u/770x0/82bedb211ed869eec10f0c299f6d95d0.jpg#82bedb211ed869eec10f0c299f6d95d0"/>
         <CategoryItem category="SONG OF THE YEAR" nomination="Outubro" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/07056e93203875f3687ff6b1ddb19ab5.jpg" />
-        <CategoryItem category="BEST NEW ARTIST" nomination="Chappell Roan" imageUrl="https://lastfm.freetls.fastly.net/i/u/770x0/5ca04932800394c7f92c526a255bd7bd.jpg#5ca04932800394c7f92c526a255bd7bd" />
+        <CategoryItem category="BEST NEW ARTIST" nomination="Chappell Roan" imageUrl="https://lastfm.freetls.fastly.net/i/u/770x0/66f9b0477bb18f008eb01b38bacda2bc.jpg#66f9b0477bb18f008eb01b38bacda2bc" />
         <CategoryItem category="BEST COLLABORATION" nomination="Die With A Smile" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/23425459b73eac17b203119b55814c89.jpg" />
       </div>
     </section>

@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import './AwardsPage.css'
 
 const BIG_FOUR_CATEGORIES = [
-  'Album of the Year',
-  'Record of the Year',
-  'Song of the Year',
+  'Album Of The Year',
+  'Record Of The Year',
+  'Song Of The Year',
   'Best New Artist',
-  'Artist of the Year',
+  'Artist Of The Year',
   'Best Collaboration',
 ]
 

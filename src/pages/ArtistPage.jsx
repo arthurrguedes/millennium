@@ -77,8 +77,8 @@ function countCredits(item, nameToFind) {
 }
 
 const MAIN_CATEGORIES = [
-  'Album of the Year', 'Record of the Year', 'Artist of the Year',
-  'Song of the Year', 'Best New Artist', 'Best Collaboration'
+  'Album Of The Year', 'Record Of The Year', 'Artist Of The Year',
+  'Song Of The Year', 'Best New Artist', 'Best Collaboration'
 ];
 
 export function ArtistPage() {
