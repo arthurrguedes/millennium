@@ -258,7 +258,7 @@ export function CategoryPage() {
             {openYears.includes(year) && (
               <ul className="category-nominee-list">
                 {nominations.map(nom => {
-                  const isArtistCategory = nom.category === 'Artist of the Year' || nom.category === 'Best New Artist';
+                  const isArtistCategory = nom.category === 'Artist of the Year' || nom.category === 'Best New Artist' || nom.category === 'Producer Of The Year' || nom.category === 'Songwriter Of The Year';
                   
                   // Renderização especial para prêmios de achievement
                   if (nom.field === 'Achievement Field') {

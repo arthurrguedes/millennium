@@ -24,12 +24,12 @@ export function CategoryGrid() {
       <span className="sub-text">CURRENT WINNERS</span>
       <div className="category-grid">
         
-        <CategoryItem category="ALBUM OF THE YEAR" nomination="Caju" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/e7edaed4fde151af42e93ae955ea6714.jpg" />
-        <CategoryItem category="RECORD OF THE YEAR" nomination="Die With A Smile" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/23425459b73eac17b203119b55814c89.jpg" />
-        <CategoryItem category="ARTIST OF THE YEAR" nomination="Sabrina Carpenter" imageUrl="https://lastfm.freetls.fastly.net/i/u/770x0/82bedb211ed869eec10f0c299f6d95d0.jpg#82bedb211ed869eec10f0c299f6d95d0"/>
-        <CategoryItem category="SONG OF THE YEAR" nomination="Outubro" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/07056e93203875f3687ff6b1ddb19ab5.jpg" />
-        <CategoryItem category="BEST NEW ARTIST" nomination="Chappell Roan" imageUrl="https://lastfm.freetls.fastly.net/i/u/770x0/66f9b0477bb18f008eb01b38bacda2bc.jpg#66f9b0477bb18f008eb01b38bacda2bc" />
-        <CategoryItem category="BEST COLLABORATION" nomination="Die With A Smile" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/23425459b73eac17b203119b55814c89.jpg" />
+        <CategoryItem category="ALBUM OF THE YEAR" nomination="DeBÍ TiRAR MáS FOToS" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/7d0982b56a5e4304eb6207d6688c917a.jpg" />
+        <CategoryItem category="RECORD OF THE YEAR" nomination="DtMF" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/7d0982b56a5e4304eb6207d6688c917a.jpg" />
+        <CategoryItem category="ARTIST OF THE YEAR" nomination="Bad Bunny" imageUrl="https://lastfm.freetls.fastly.net/i/u/770x0/0a1a16c77a375597438b2017b94e5988.jpg#0a1a16c77a375597438b2017b94e5988"/>
+        <CategoryItem category="SONG OF THE YEAR" nomination="DtMF" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/7d0982b56a5e4304eb6207d6688c917a.jpg" />
+        <CategoryItem category="BEST NEW ARTIST" nomination="Leon Thomas" imageUrl="https://lastfm.freetls.fastly.net/i/u/770x0/24c822919c2d74ae5b9a02789af2ec3d.jpg#24c822919c2d74ae5b9a02789af2ec3d" />
+        <CategoryItem category="BEST COLLABORATION" nomination="Luther" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/a79564a9768d05272682b252deb02079.jpg" />
       </div>
     </section>
   );

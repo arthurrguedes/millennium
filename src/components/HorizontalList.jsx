@@ -22,6 +22,7 @@ export function HorizontalList() {
       <span className="accent-text">MILLENNIUM - Time Capsule</span>
       <div className="horizontal-list-container">
 
+        <HorizontalItem title="27th Annual Millennium" subtitle="2025" imageUrl=""/>
         <HorizontalItem title="26th Annual Millennium" subtitle="2024" imageUrl=""/>
         <HorizontalItem title="25th Annual Millennium" subtitle="2023" imageUrl=""/>
         <HorizontalItem title="24th Annual Millennium" subtitle="2022" imageUrl=""/>

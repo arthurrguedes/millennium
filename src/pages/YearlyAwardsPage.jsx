@@ -1,27 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import './YearlyAwardsPage.css'
 
-// (A função flattenCreditsToString permanece a mesma, pois ainda é usada
-// por 'RenderCredits' e outras páginas)
 function flattenCreditsToString(creditData) {
-  if (!creditData) {
-    return null; 
-  }
-  if (typeof creditData === 'string') {
-    return creditData;
-  }
+  if (!creditData) return null;
+  if (typeof creditData === 'string') return creditData;
   if (typeof creditData === 'object' && !Array.isArray(creditData)) {
     const allNames = [];
     const roles = Object.keys(creditData); 
     for (const role of roles) {
       const names = creditData[role];
-      if (Array.isArray(names)) {
-        allNames.push(...names);
-      }
-      else if (typeof names === 'string') {
-        allNames.push(...names.split(',').map(n => n.trim()));
-      }
+      if (Array.isArray(names)) allNames.push(...names);
+      else if (typeof names === 'string') allNames.push(...names.split(',').map(n => n.trim()));
     }
     const validNames = allNames.filter(name => name && name.trim());
     if (validNames.length === 0) return null;
@@ -30,7 +20,6 @@ function flattenCreditsToString(creditData) {
   return null; 
 }
 
-// (A função getEditionTitle permanece a mesma)
 function getEditionTitle(year) {
   const numericYear = parseInt(year, 10)
   const edition = numericYear - 1999 + 1
@@ -42,12 +31,9 @@ function getEditionTitle(year) {
   return `${edition}${suffix} Millennium Awards`
 }
 
-// (A função RenderCredits permanece a mesma)
 function RenderCredits({ label, namesString, showLabel = true, isBold = false }) {
   const flatNamesString = flattenCreditsToString(namesString);
-  if (!flatNamesString || typeof flatNamesString !== 'string' || flatNamesString === '—') {
-    return null;
-  }
+  if (!flatNamesString || typeof flatNamesString !== 'string' || flatNamesString === '—') return null;
   const namesArray = flatNamesString.split(',').map(name => name.trim());
 
   return (
@@ -57,10 +43,7 @@ function RenderCredits({ label, namesString, showLabel = true, isBold = false })
       {namesArray.map((name, index) => (
         <React.Fragment key={name}>
           {index > 0 && ', '}
-          <Link 
-            to={`/artist/${encodeURIComponent(name)}`}
-            className={isBold ? 'bold-link' : ''} 
-          >
+          <Link to={`/artist/${encodeURIComponent(name)}`} className={isBold ? 'bold-link' : ''}>
             {name}
           </Link>
         </React.Fragment>
@@ -69,14 +52,8 @@ function RenderCredits({ label, namesString, showLabel = true, isBold = false })
   );
 }
 
-// --- 1. CRIAR NOVO COMPONENTE PARA CRÉDITOS TÉCNICOS ---
 function RenderTechnicalCredits({ technicalObject }) {
-  // Se 'technical' não for um objeto (ou for nulo/array), não renderiza nada
-  if (!technicalObject || typeof technicalObject !== 'object' || Array.isArray(technicalObject)) {
-    return null;
-  }
-
-  // Pega as chaves do objeto (ex: "Master Engineers", "Sound Engineers")
+  if (!technicalObject || typeof technicalObject !== 'object' || Array.isArray(technicalObject)) return null;
   const roles = Object.keys(technicalObject);
 
   return (
@@ -84,24 +61,13 @@ function RenderTechnicalCredits({ technicalObject }) {
       <strong>Technical(s):</strong>
       {roles.map(role => {
         const names = technicalObject[role];
-        
-        // Converte os nomes (seja array, string, ou nulo) para um array limpo
         let namesArray = [];
-        if (Array.isArray(names)) {
-          namesArray = names;
-        } else if (typeof names === 'string' && names !== '—') {
-          namesArray = names.split(',').map(n => n.trim());
-        }
-
-        // Se não houver nomes para este papel, não renderiza a linha
-        if (namesArray.length === 0) {
-          return null;
-        }
-
-        // Formata "Master Engineers" para "Master Engineer(s)"
+        if (Array.isArray(names)) namesArray = names;
+        else if (typeof names === 'string' && names !== '—') namesArray = names.split(',').map(n => n.trim());
+        
+        if (namesArray.length === 0) return null;
         const formattedRole = role.replace(/s$/, '(s)');
 
-        // Renderiza a linha de crédito (ex: Master Engineer(s): Matt Colton)
         return (
           <p key={role} className="nominee-credit-line technical-role">
             <strong className="role-label">{formattedRole}:</strong>
@@ -109,9 +75,7 @@ function RenderTechnicalCredits({ technicalObject }) {
             {namesArray.map((name, index) => (
               <React.Fragment key={name}>
                 {index > 0 && ', '}
-                <Link to={`/artist/${encodeURIComponent(name)}`}>
-                  {name}
-                </Link>
+                <Link to={`/artist/${encodeURIComponent(name)}`}>{name}</Link>
               </React.Fragment>
             ))}
           </p>
@@ -121,9 +85,7 @@ function RenderTechnicalCredits({ technicalObject }) {
   );
 }
 
-
 export function YearlyAwardsPage() {
-  // (O topo da função, estados e useEffects permanecem os mesmos)
   const [allData, setAllData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [fields, setFields] = useState([])
@@ -152,6 +114,45 @@ export function YearlyAwardsPage() {
     }
   }, [selectedYear, allData])
 
+  // --- LÓGICA PARA CALCULAR ESTATÍSTICAS DO ANO ---
+  const yearStats = useMemo(() => {
+    if (filteredData.length === 0) return null;
+
+    const nominationsCount = {};
+    const winsCount = {};
+
+    filteredData.forEach(nom => {
+      // Separa artistas se houver vírgula (ex: "Beyoncé, Jay-Z")
+      if (nom.main_artist) {
+        const artists = nom.main_artist.split(',').map(a => a.trim());
+        
+        artists.forEach(artist => {
+          // Conta Indicações
+          nominationsCount[artist] = (nominationsCount[artist] || 0) + 1;
+
+          // Conta Vitórias
+          if (nom.result === 'Winner') {
+            winsCount[artist] = (winsCount[artist] || 0) + 1;
+          }
+        });
+      }
+    });
+
+    // Função auxiliar para achar o máximo e retornar array de nomes
+    const findLeaders = (countMap) => {
+      const max = Math.max(0, ...Object.values(countMap));
+      if (max === 0) return { count: 0, artists: [] };
+      const leaders = Object.keys(countMap).filter(artist => countMap[artist] === max);
+      return { count: max, artists: leaders };
+    };
+
+    return {
+      mostNominated: findLeaders(nominationsCount),
+      mostWins: findLeaders(winsCount)
+    };
+  }, [filteredData]);
+  // ------------------------------------------------
+
   const groupedNominations = filteredData.reduce((acc, nom) => {
     if (!acc[nom.category]) {
       acc[nom.category] = []
@@ -176,13 +177,48 @@ export function YearlyAwardsPage() {
     })
     .filter(([category, nominees]) => nominees.length > 0);
 
-
   return (
     <div className="awards-page-container">
-      {/* (O header e o sidebar permanecem os mesmos) */}
       <div className="awards-header">
         <h1>{getEditionTitle(selectedYear)}</h1>
         <p>Honoring the best in music from {selectedYear}</p>
+
+        {/* --- EXIBIÇÃO DAS ESTATÍSTICAS --- */}
+        {yearStats && (
+          <div className="year-stats-container">
+            {yearStats.mostNominated.count > 0 && (
+              <div className="stat-box">
+                <span className="stat-label">Most Nominations</span>
+                <span className="stat-count">{yearStats.mostNominated.count}</span>
+                <div className="stat-artists">
+                  {yearStats.mostNominated.artists.map((artist, i) => (
+                    <span key={artist}>
+                      {i > 0 && ', '}
+                      <Link to={`/artist/${encodeURIComponent(artist)}`}>{artist}</Link>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {yearStats.mostWins.count > 0 && (
+              <div className="stat-box highlight">
+                <span className="stat-label">Most Wins</span>
+                <span className="stat-count">{yearStats.mostWins.count}</span>
+                <div className="stat-artists">
+                  {yearStats.mostWins.artists.map((artist, i) => (
+                    <span key={artist}>
+                      {i > 0 && ', '}
+                      <Link to={`/artist/${encodeURIComponent(artist)}`}>{artist}</Link>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        {/* --------------------------------- */}
+
       </div>
 
       <div className="awards-body">
@@ -226,20 +262,13 @@ export function YearlyAwardsPage() {
               <h4>{category}</h4>
               <ul>
                 {nominees.map((nom) => {
-
-                  // (Lógica do Achievement Field permanece a mesma)
                   if (nom.field === 'Achievement Field' && nom.defining_awards) {
                     return (
                       <li key={nom.id} className="winner achievement-award">
                         <div className="nominee-info">
-                          <RenderCredits 
-                            namesString={nom.main_artist} 
-                            showLabel={false} 
-                            isBold={true} 
-                          />
+                          <RenderCredits namesString={nom.main_artist} showLabel={false} isBold={true} />
                           <span className="winner-label">WINNER</span>
                         </div>
-                        
                         <ul className="defining-awards-list">
                           {nom.defining_awards.map((award, index) => (
                             <li key={index} className="defining-award-item">
@@ -259,10 +288,11 @@ export function YearlyAwardsPage() {
                     );
                   }
 
-                  // (Lógica de prêmios normais)
                   const isArtistCategory =
-                    nom.category === 'Artist of the Year' ||
-                    nom.category === 'Best New Artist';
+                    nom.category === 'Artist Of The Year' ||
+                    nom.category === 'Best New Artist' ||
+                    nom.category === 'Producer Of The Year' ||
+                    nom.category === 'Songwriter Of The Year';
 
                   return (
                     <li
@@ -272,15 +302,10 @@ export function YearlyAwardsPage() {
                       }`}
                     >
                       <div className="nominee-info">
-                        <RenderCredits 
-                          namesString={nom.main_artist} 
-                          showLabel={false} 
-                          isBold={true} 
-                        />
+                        <RenderCredits namesString={nom.main_artist} showLabel={false} isBold={true} />
                         {!isArtistCategory && (
                           <span>"{nom.nomination}"</span>
                         )}
-
                         {nom.result === 'Winner' && (
                           <span className="winner-label">WINNER</span>
                         )}
@@ -291,15 +316,11 @@ export function YearlyAwardsPage() {
                           <RenderCredits label="Producer(s)" namesString={nom.producer} />
                           <RenderCredits label="Songwriter(s)" namesString={nom.songwriters} />
                           <RenderCredits label="Director(s)" namesString={nom.director} />
-                          
-                          {/* --- 2. SUBSTITUIR O RENDERCREDITS ANTIGO --- */}
                           {nom.category === 'Best Engineered Album' ? (
                             <RenderTechnicalCredits technicalObject={nom.technical} />
                           ) : (
                             <RenderCredits label="Technical(s)" namesString={nom.technical} />
                           )}
-                          {/* --- FIM DA MODIFICAÇÃO --- */}
-
                         </div>
                       )}
                     </li>

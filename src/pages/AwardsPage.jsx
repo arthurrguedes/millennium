@@ -62,8 +62,10 @@ export function AwardsPage() {
                 
                 // Verificação se é uma categoria de artista
                 const isArtistCategory =
-                  winner.category === 'Artist of the Year' ||
-                  winner.category === 'Best New Artist';
+                  winner.category === 'Artist Of The Year' ||
+                  winner.category === 'Best New Artist' ||
+                  winner.category === 'Producer Of The Year' ||
+                  winner.category === 'Songwriter Of The Year';
 
                 return (
                   <li key={winner.id}>
