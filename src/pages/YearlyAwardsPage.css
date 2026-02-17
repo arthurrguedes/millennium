@@ -442,6 +442,21 @@
   color: var(--gold);
 }
 
+.awards-sidebar {
+  /* Faz a sidebar ficar presa ao topo enquanto rola a página */
+  position: sticky;
+  top: 20px; /* Distância do topo da tela */
+  
+  /* Define a altura máxima como a altura da tela (menos um respiro) */
+  max-height: calc(100vh - 40px);
+  
+  /* Habilita rolagem interna se o conteúdo da sidebar for maior que a tela */
+  overflow-y: auto;
+  
+  /* (Opcional) Largura fixa para garantir que não quebre o layout */
+  min-width: 200px; 
+}
+
 /* responsividade: em telas pequenas colocamos as stats abaixo do título */
 @media (max-width: 800px) {
   .year-stats-container {

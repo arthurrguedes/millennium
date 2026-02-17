@@ -178,7 +178,7 @@ export function ArtistPage() {
       </div>
 
       <div className="filter-toggle-artist">
-        <label htmlFor="winnersOnly">Show Winners Only</label>
+        <label htmlFor="winnersOnly">Only Wins</label>
         <input
           type="checkbox"
           id="winnersOnly"

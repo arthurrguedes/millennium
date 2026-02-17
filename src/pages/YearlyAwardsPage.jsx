@@ -22,7 +22,7 @@ function flattenCreditsToString(creditData) {
 
 function getEditionTitle(year) {
   const numericYear = parseInt(year, 10)
-  const edition = numericYear - 1999 + 1
+  const edition = numericYear - 1998 + 1
   if (isNaN(edition)) return 'Awards'
   let suffix = 'th'
   if (edition % 10 === 1 && edition % 100 !== 11) suffix = 'st'

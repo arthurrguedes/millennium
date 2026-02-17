@@ -1,9 +1,29 @@
+import { Link } from 'react-router-dom';
+
 // Componente de um item individual da lista
-function HorizontalItem({title, subtitle, imageUrl}) {
+function HorizontalItem({title, subtitle, imageUrl, href}) {
+
+const Container = href ? Link : 'div';
+  
+  // Se for link, precisa da prop 'to'. Se for div, não precisa
+  const props = href ? { to: href } : {};
+
   return (
-    <div className="horizontal-item">
+    <Container 
+      {...props} 
+      className="horizontal-item"
+      // Adicionando estilos para remover o sublinhado padrão de links e arrumar o cursor
+      style={{ 
+        textDecoration: 'none', 
+        color: 'inherit', 
+        cursor: href ? 'pointer' : 'default',
+        display: 'flex', // Garante que a estrutura se mantenha
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}
+    >
       <img 
-        src={imageUrl} 
+        src={imageUrl ? (imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`) : "/millennium_default.png"} 
         alt={title} 
         className="circle-image"
       />
@@ -11,45 +31,50 @@ function HorizontalItem({title, subtitle, imageUrl}) {
         <strong>{title}</strong>
         <span>{subtitle}</span>
       </div>
-    </div>
+    </Container>
   );
 }
 
 // Componente principal da seção
 export function HorizontalList() {
+  const currentYear = 2025;
+  const startYear = 1998;
+  const yearsList = [];
+
+  for (let year = currentYear; year >= startYear; year--) {
+    // Calcula a edição | 2025 - 1998 + 1 
+    const edition = year - startYear + 1;
+    
+    // Função para colocar o sufixo
+    const getOrdinal = (n) => {
+      const s = ["th", "st", "nd", "rd"];
+      const v = n % 100;
+      return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    };
+
+    yearsList.push({
+      year: year,
+      title: `${getOrdinal(edition)} Annual Millennium`,
+      href: `/awards/${year}`
+    });
+  }
+
   return (
     <section className="horizontal-list-section">
       <span className="accent-text">MILLENNIUM - Time Capsule</span>
       <div className="horizontal-list-container">
-
-        <HorizontalItem title="27th Annual Millennium" subtitle="2025" imageUrl=""/>
-        <HorizontalItem title="26th Annual Millennium" subtitle="2024" imageUrl=""/>
-        <HorizontalItem title="25th Annual Millennium" subtitle="2023" imageUrl=""/>
-        <HorizontalItem title="24th Annual Millennium" subtitle="2022" imageUrl=""/>
-        <HorizontalItem title="23rd Annual Millennium" subtitle="2021"imageUrl=""/>
-        <HorizontalItem title="22nd Annual Millennium" subtitle="2020" imageUrl=""/>
-        <HorizontalItem title="21st Annual Millennium" subtitle="2019" imageUrl=""/>
-        <HorizontalItem title="20th Annual Millennium" subtitle="2018" imageUrl=""/>
-        <HorizontalItem title="19th Annual Millennium" subtitle="2017" imageUrl=""/>
-        <HorizontalItem title="18th Annual Millennium" subtitle="2016" imageUrl=""/>
-        <HorizontalItem title="17th Annual Millennium" subtitle="2015" imageUrl=""/>
-        <HorizontalItem title="16th Annual Millennium" subtitle="2014" imageUrl=""/>
-        <HorizontalItem title="15th Annual Millennium" subtitle="2013" imageUrl=""/>
-        <HorizontalItem title="14th Annual Millennium" subtitle="2012" imageUrl=""/>
-        <HorizontalItem title="13th Annual Millennium" subtitle="2011" imageUrl=""/>
-        <HorizontalItem title="12th Annual Millennium" subtitle="2010" imageUrl=""/>
-        <HorizontalItem title="11th Annual Millennium" subtitle="2009" imageUrl=""/>
-        <HorizontalItem title="10th Annual Millennium" subtitle="2008" imageUrl=""/>
-        <HorizontalItem title="9th Annual Millennium" subtitle="2007" imageUrl=""/>
-        <HorizontalItem title="8th Annual Millennium" subtitle="2006" imageUrl=""/>
-        <HorizontalItem title="7th Annual Millennium" subtitle="2005" imageUrl=""/>
-        <HorizontalItem title="6th Annual Millennium" subtitle="2004" imageUrl=""/>
-        <HorizontalItem title="5th Annual Millennium" subtitle="2003" imageUrl=""/>
-        <HorizontalItem title="4th Annual Millennium" subtitle="2002" imageUrl=""/>
-        <HorizontalItem title="3rd Annual Millennium" subtitle="2001" imageUrl=""/>
-        <HorizontalItem title="2nd Annual Millennium" subtitle="2000" imageUrl=""/>
-        <HorizontalItem title="1st Annual Millennium" subtitle="1999" imageUrl=""/>
         
+        {/* Renderiza a lista com um map (loop) */}
+        {yearsList.map((item) => (
+          <HorizontalItem 
+            key={item.year} 
+            href={item.href}
+            title={item.title} 
+            subtitle={item.year.toString()} 
+            imageUrl="/millennium_default.png"
+          />
+        ))}
+
       </div>
     </section>
   );
