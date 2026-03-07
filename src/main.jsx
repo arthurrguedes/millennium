@@ -11,6 +11,8 @@ import { ArtistPage } from './pages/ArtistPage'
 import { StatsPage } from './pages/StatsPage.jsx'
 import { FieldsPage } from './pages/FieldsPage.jsx'
 import { CategoryPage } from './pages/CategoryPage.jsx'
+import { NewsPage } from './pages/NewsPage.jsx'
+import { NewsArticlePage } from './pages/NewsArticlePage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,15 @@ const router = createBrowserRouter([
         path: '/awards',
         element: <AwardsPage />,
       },
+      { 
+        path: '/news', 
+        element: <NewsPage /> },
+      { 
+        path: '/news/:id', 
+        element: <NewsArticlePage /> }, 
+      { 
+        path: '/awards', 
+        element: <AwardsPage /> },
       {
         path: '/awards/:year',
         element: <YearlyAwardsPage />,

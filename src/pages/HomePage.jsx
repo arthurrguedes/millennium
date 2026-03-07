@@ -9,8 +9,8 @@ export function HomePage() {
     <>
       <main className="main-grid">
         <HeroColumn />
-        <TopListColumn title="Check out the artists making their debut in this 2025 ceremony" />
-        <TopListColumn title="2025 Album Of The Year Nominees" />
+        <TopListColumn title="Check out the artists making their debut in this 2025 ceremony." />
+        <TopListColumn title="See full list of 2025 Album Of The Year nominees." />
       </main>
 
       <CategoryGrid />

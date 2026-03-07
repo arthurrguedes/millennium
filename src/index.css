@@ -11,3 +11,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+.clickable-title:hover {
+  color: var(--accent-color); /* Ou a cor de destaque que você usa */
+  text-decoration: underline;
+  cursor: pointer;
+}
