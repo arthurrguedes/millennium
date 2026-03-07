@@ -38,11 +38,11 @@ const Container = href ? Link : 'div';
 // Componente principal da seção
 export function HorizontalList() {
   const currentYear = 2025;
-  const startYear = 1998;
+  const startYear = 1997;
   const yearsList = [];
 
   for (let year = currentYear; year >= startYear; year--) {
-    // Calcula a edição | 2025 - 1998 + 1 
+    // Calcula a edição | 2025 - 1997 + 1 
     const edition = year - startYear + 1;
     
     // Função para colocar o sufixo
