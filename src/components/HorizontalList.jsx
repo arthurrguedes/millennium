@@ -61,7 +61,7 @@ export function HorizontalList() {
 
   return (
     <section className="horizontal-list-section">
-      <span className="accent-text">MILLENNIUM - Time Capsule</span>
+      <span className="accent-text">Time Capsule</span>
       <div className="horizontal-list-container">
         
         {/* Renderiza a lista com um map (loop) */}

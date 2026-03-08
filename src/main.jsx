@@ -13,6 +13,7 @@ import { FieldsPage } from './pages/FieldsPage.jsx'
 import { CategoryPage } from './pages/CategoryPage.jsx'
 import { NewsPage } from './pages/NewsPage.jsx'
 import { NewsArticlePage } from './pages/NewsArticlePage.jsx'
+import { AboutPage } from './pages/AboutPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <HomePage />,
+      },
+      {
+        path: '/about',
+        element: <AboutPage />,
       },
       {
         path: '/awards',
