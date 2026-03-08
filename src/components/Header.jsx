@@ -127,7 +127,7 @@ export function Header() {
       <div ref={searchRef} className="search-container" style={{ position: 'relative' }}>
         <input 
           type="text" 
-          placeholder="Busque o artista" 
+          placeholder="Search for artist" 
           className="search-barbox" 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

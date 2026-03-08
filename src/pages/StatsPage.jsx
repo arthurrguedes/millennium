@@ -3,48 +3,25 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './StatsPage.css'; 
 
-/**
- * Converte um campo de crédito (string ou objeto) em uma string única 
- * de nomes separados por vírgula.
- * Ex: { "Master Engineers": ["Matt Colton"] } => "Matt Colton"
- * Ex: "Produtor 1, Produtor 2" => "Produtor 1, Produtor 2"
- */
 function flattenCreditsToString(creditData) {
-  if (!creditData) {
-    return null; // Retorna nulo se a entrada for nula
-  }
-  
-  // Caso 1: Já é uma string (o formato antigo)
-  if (typeof creditData === 'string') {
-    return creditData;
-  }
+  if (!creditData) return null;
+  if (typeof creditData === 'string') return creditData;
 
-  // Caso 2: É um objeto (o novo formato)
   if (typeof creditData === 'object' && !Array.isArray(creditData)) {
     const allNames = [];
-    // Pega todas as chaves (ex: "Master Engineers", "Sound Engineers")
     const roles = Object.keys(creditData); 
-    
     for (const role of roles) {
       const names = creditData[role];
-      
-      // Se a chave tiver um array de nomes (ex: ["Matt Colton"])
       if (Array.isArray(names)) {
         allNames.push(...names);
-      }
-      // Se a chave tiver uma string de nomes (ex: "Name1, Name2")
-      else if (typeof names === 'string') {
+      } else if (typeof names === 'string') {
         allNames.push(...names.split(',').map(n => n.trim()));
       }
     }
-    
-    // Filtra nomes vazios/nulos e junta em uma string
     const validNames = allNames.filter(name => name && name.trim());
     if (validNames.length === 0) return null;
     return validNames.join(', ');
   }
-  
-  // Retorno padrão se não for um tipo esperado
   return null; 
 }
 
@@ -52,17 +29,13 @@ export function StatsPage() {
   const [topWinners, setTopWinners] = useState([]);
   const [topNominees, setTopNominees] = useState([]);
   const [topGeneralWinners, setTopGeneralWinners] = useState([]);
+  const [topGeneralNominees, setTopGeneralNominees] = useState([]); // Novo estado
   const [loading, setLoading] = useState(true);
   const [openAccordion, setOpenAccordion] = useState('wins');
 
-  // --- LÓGICA DE CONTAGEM MODIFICADA ---
-  // Esta função agora conta créditos (não usa Set)
   const processNames = (namesString, countsObject) => {
     const flatNamesString = flattenCreditsToString(namesString);
-
-    if (!flatNamesString || flatNamesString === '—') {
-      return;
-    }
+    if (!flatNamesString || flatNamesString === '—') return;
     const namesArray = flatNamesString.split(',').map(name => name.trim());
     namesArray.forEach(name => {
       if (name) { 
@@ -71,7 +44,6 @@ export function StatsPage() {
     });
   };
 
-  // --- useEffect com a lógica corrigida ---
   useEffect(() => {
     fetch('/db.json')
       .then((res) => res.json())
@@ -79,107 +51,97 @@ export function StatsPage() {
         const winCounts = {};
         const nomCounts = {};
         const generalWinCounts = {}; 
+        const generalNomCounts = {}; // Novo contador
         
-        // --- 1. Cálculo de Indicações (NOMINEES) Corrigido ---
         data.forEach(item => {
-          // Créditos do nível superior
+          // Indicações Gerais (All Fields)
           processNames(item.main_artist, nomCounts);
           processNames(item.producer, nomCounts);
           processNames(item.songwriters, nomCounts);
           processNames(item.technical, nomCounts);
           processNames(item.director, nomCounts);
+
+          // Filtro para General Field (Indicações)
+          if (item.field === 'General Field') {
+            processNames(item.main_artist, generalNomCounts);
+            processNames(item.producer, generalNomCounts);
+            processNames(item.songwriters, generalNomCounts);
+            processNames(item.technical, generalNomCounts);
+            processNames(item.director, generalNomCounts);
+          }
           
-          // Créditos aninhados (sub-prêmios)
           if (item.defining_awards && Array.isArray(item.defining_awards)) {
             for (const subAward of item.defining_awards) {
               processNames(subAward.producer, nomCounts);
               processNames(subAward.songwriters, nomCounts);
               processNames(subAward.director, nomCounts);
+              
+              if (item.field === 'General Field') {
+                processNames(subAward.producer, generalNomCounts);
+                processNames(subAward.songwriters, generalNomCounts);
+                processNames(subAward.director, generalNomCounts);
+              }
             }
           }
         });
 
-        // --- 2. Cálculo de Vencedores (WINS) Corrigido ---
+        // Cálculo de Vencedores
         const winners = data.filter(item => item.result === 'Winner');
         winners.forEach(item => {
-          // Nível superior
           processNames(item.main_artist, winCounts);
           processNames(item.producer, winCounts);
           processNames(item.songwriters, winCounts);
           processNames(item.technical, winCounts);
           processNames(item.director, winCounts);
           
-          // Nível aninhado (sub-prêmios)
+          if (item.field === 'General Field') {
+            processNames(item.main_artist, generalWinCounts);
+            processNames(item.producer, generalWinCounts);
+            processNames(item.songwriters, generalWinCounts);
+            processNames(item.technical, generalWinCounts);
+            processNames(item.director, generalWinCounts);
+          }
+
           if (item.defining_awards && Array.isArray(item.defining_awards)) {
             for (const subAward of item.defining_awards) {
               processNames(subAward.producer, winCounts);
               processNames(subAward.songwriters, winCounts);
               processNames(subAward.director, winCounts);
+              
+              if (item.field === 'General Field') {
+                processNames(subAward.producer, generalWinCounts);
+                processNames(subAward.songwriters, generalWinCounts);
+                processNames(subAward.director, generalWinCounts);
+              }
             }
           }
         });
 
-        // --- 3. Cálculo de Vencedores (GENERAL) Corrigido ---
-        const generalWinners = data.filter(item => 
-            item.result === 'Winner' && item.field === 'General Field'
-        );
-        
-        generalWinners.forEach(item => {
-          // Nível superior
-          processNames(item.main_artist, generalWinCounts);
-          processNames(item.producer, generalWinCounts);
-          processNames(item.songwriters, generalWinCounts);
-          processNames(item.technical, generalWinCounts);
-          processNames(item.director, generalWinCounts);
-          
-          // Nível aninhado
-          if (item.defining_awards && Array.isArray(item.defining_awards)) {
-            for (const subAward of item.defining_awards) {
-              processNames(subAward.producer, generalWinCounts);
-              processNames(subAward.songwriters, generalWinCounts);
-              processNames(subAward.director, generalWinCounts);
-            }
-          }
-        });
+        // Ordenação e Estados
+        const sortLimit = (counts) => Object.entries(counts)
+          .map(([name, count]) => ({ name, count }))
+          .sort((a, b) => b.count - a.count)
+          .slice(0, 10);
 
-        // --- Definir Estados (O resto do código é o mesmo) ---
-        const sortedWinners = Object.entries(winCounts)
-          .map(([name, count]) => ({ name, count }))
-          .sort((a, b) => b.count - a.count);
-        setTopWinners(sortedWinners.slice(0, 10));
-        
-        const sortedNominees = Object.entries(nomCounts)
-          .map(([name, count]) => ({ name, count }))
-          .sort((a, b) => b.count - a.count);
-        setTopNominees(sortedNominees.slice(0, 10));
-
-        const sortedGeneralWinners = Object.entries(generalWinCounts)
-          .map(([name, count]) => ({ name, count }))
-          .sort((a, b) => b.count - a.count);
-        setTopGeneralWinners(sortedGeneralWinners.slice(0, 10));
+        setTopWinners(sortLimit(winCounts));
+        setTopNominees(sortLimit(nomCounts));
+        setTopGeneralWinners(sortLimit(generalWinCounts));
+        setTopGeneralNominees(sortLimit(generalNomCounts)); // Define o novo estado
 
         setLoading(false);
       })
       .catch((err) => {
-        console.error('Falha ao carregar dados de estatísticas:', err);
+        console.error('Falha ao carregar dados:', err);
         setLoading(false);
       });
   }, []); 
 
-  // Função do accordion (sem alterações)
   const handleAccordionClick = (key) => {
-    if (openAccordion === key) {
-      setOpenAccordion(null);
-    } else {
-      setOpenAccordion(key);
-    }
+    setOpenAccordion(openAccordion === key ? null : key);
   };
 
-  if (loading) {
-    return <div>Loading stats...</div>;
-  }
+  if (loading) return <div>Loading stats...</div>;
 
-  // JSX (return) - Nenhuma alteração
   return (
     <div className="stats-page-container">
       <div className="awards-header">
@@ -187,75 +149,68 @@ export function StatsPage() {
         <p>All-time rankings for the most awarded and nominated individuals.</p>
       </div>
 
+      {/* Wins Accordion */}
       <div className="ranking-section-accordion">
-        <button 
-          className={`accordion-toggle ${openAccordion === 'wins' ? 'active' : ''}`}
-          onClick={() => handleAccordionClick('wins')}
-        >
+        <button className={`accordion-toggle ${openAccordion === 'wins' ? 'active' : ''}`} onClick={() => handleAccordionClick('wins')}>
           <h2>Top 10 - Most Wins (All Fields)</h2>
           <span className="toggle-icon">{openAccordion === 'wins' ? '▾' : '▸'}</span>
         </button>
         {openAccordion === 'wins' && (
           <div className="accordion-content">
             <ol className="stats-ranking-list">
-              {topWinners.map((winner, index) => (
-                <li key={winner.name}>
-                  <span className="rank-number">{index + 1}.</span>
-                  <Link to={`/artist/${encodeURIComponent(winner.name)}`} className="artist-name-link">
-                    {winner.name}
-                  </Link>
-                  <span className="win-count">{winner.count} Wins</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
-      </div>
-      
-      <div className="ranking-section-accordion">
-        <button 
-          className={`accordion-toggle ${openAccordion === 'general' ? 'active' : ''}`}
-          onClick={() => handleAccordionClick('general')}
-        >
-          <h2>Top 10 - Most General Field Wins</h2>
-          <span className="toggle-icon">{openAccordion === 'general' ? '▾' : '▸'}</span>
-        </button>
-        {openAccordion === 'general' && (
-          <div className="accordion-content">
-            <ol className="stats-ranking-list">
-              {topGeneralWinners.map((winner, index) => (
-                <li key={winner.name}>
-                  <span className="rank-number">{index + 1}.</span>
-                  <Link to={`/artist/${encodeURIComponent(winner.name)}`} className="artist-name-link">
-                    {winner.name}
-                  </Link>
-                  <span className="win-count">{winner.count} Wins</span>
-                </li>
+              {topWinners.map((w, i) => (
+                <li key={w.name}><span className="rank-number">{i + 1}.</span> <Link to={`/artist/${encodeURIComponent(w.name)}`} className="artist-name-link">{w.name}</Link> <span className="win-count">{w.count} Wins</span></li>
               ))}
             </ol>
           </div>
         )}
       </div>
 
+            {/* Nominations Accordion */}
       <div className="ranking-section-accordion">
-        <button 
-          className={`accordion-toggle ${openAccordion === 'noms' ? 'active' : ''}`}
-          onClick={() => handleAccordionClick('noms')}
-        >
+        <button className={`accordion-toggle ${openAccordion === 'noms' ? 'active' : ''}`} onClick={() => handleAccordionClick('noms')}>
           <h2>Top 10 - Most Nominations (All Fields)</h2>
           <span className="toggle-icon">{openAccordion === 'noms' ? '▾' : '▸'}</span>
         </button>
         {openAccordion === 'noms' && (
           <div className="accordion-content">
             <ol className="stats-ranking-list">
-              {topNominees.map((nominee, index) => (
-                <li key={nominee.name}>
-                  <span className="rank-number">{index + 1}.</span>
-                  <Link to={`/artist/${encodeURIComponent(nominee.name)}`} className="artist-name-link">
-                    {nominee.name}
-                  </Link>
-                  <span className="win-count">{nominee.count} Nominations</span>
-                </li>
+              {topNominees.map((n, i) => (
+                <li key={n.name}><span className="rank-number">{i + 1}.</span> <Link to={`/artist/${encodeURIComponent(n.name)}`} className="artist-name-link">{n.name}</Link> <span className="win-count">{n.count} Nominations</span></li>
+              ))}
+            </ol>
+          </div>
+        )}
+      </div>
+      
+      {/* General Wins Accordion */}
+      <div className="ranking-section-accordion">
+        <button className={`accordion-toggle ${openAccordion === 'general' ? 'active' : ''}`} onClick={() => handleAccordionClick('general')}>
+          <h2>Top 10 - Most General Field Wins</h2>
+          <span className="toggle-icon">{openAccordion === 'general' ? '▾' : '▸'}</span>
+        </button>
+        {openAccordion === 'general' && (
+          <div className="accordion-content">
+            <ol className="stats-ranking-list">
+              {topGeneralWinners.map((w, i) => (
+                <li key={w.name}><span className="rank-number">{i + 1}.</span> <Link to={`/artist/${encodeURIComponent(w.name)}`} className="artist-name-link">{w.name}</Link> <span className="win-count">{w.count} Wins</span></li>
+              ))}
+            </ol>
+          </div>
+        )}
+      </div>
+
+      {/* NOVO: General Nominations Accordion */}
+      <div className="ranking-section-accordion">
+        <button className={`accordion-toggle ${openAccordion === 'general_noms' ? 'active' : ''}`} onClick={() => handleAccordionClick('general_noms')}>
+          <h2>Top 10 - Most General Field Nominations</h2>
+          <span className="toggle-icon">{openAccordion === 'general_noms' ? '▾' : '▸'}</span>
+        </button>
+        {openAccordion === 'general_noms' && (
+          <div className="accordion-content">
+            <ol className="stats-ranking-list">
+              {topGeneralNominees.map((n, i) => (
+                <li key={n.name}><span className="rank-number">{i + 1}.</span> <Link to={`/artist/${encodeURIComponent(n.name)}`} className="artist-name-link">{n.name}</Link> <span className="win-count">{n.count} Nominations</span></li>
               ))}
             </ol>
           </div>

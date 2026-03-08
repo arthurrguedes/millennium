@@ -43,7 +43,7 @@ export function NewsPage() {
             </p>
             
             <Link to={`/news/${item.id}`} className="accent-text" style={{ fontSize: '0.9rem', textDecoration: 'none' }}>
-              LER ARTIGO COMPLETO →
+              FULL ARTICLE READ →
             </Link>
           </article>
         ))}

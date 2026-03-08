@@ -28,23 +28,39 @@ export function HeroColumn() {
       </div>
 
       {/* Espaço da Imagem: Agora dinâmico e clicável */}
-      <div className="image-placeholder-large" style={{ overflow: 'hidden' }}>
-        {latestNews ? (
-          <Link to={`/news/${latestNews.id}`}>
-            {latestNews.image ? (
-              <img 
-                src={latestNews.image} 
-                alt={latestNews.title} 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
-              />
-            ) : (
-              <div style={{ padding: '20px' }}>No image available</div>
-            )}
-          </Link>
-        ) : (
-          "placeholder principal"
-        )}
-      </div>
+<div className="image-placeholder-large" style={{ 
+  overflow: 'hidden', 
+  padding: 0,         // Garante que o container não tenha preenchimento interno
+  display: 'flex'      // Ajuda a alinhar o conteúdo interno perfeitamente
+}}>
+  {latestNews ? (
+    <Link 
+      to={`/news/${latestNews.id}`} 
+      style={{ 
+        display: 'block', // Transforma o Link em bloco
+        width: '100%',    // Força o Link a ocupar toda a largura
+        height: '100%'    // Força o Link a ocupar toda a altura
+      }}
+    >
+      {latestNews.image ? (
+        <img 
+          src={latestNews.image} 
+          alt={latestNews.title} 
+          style={{ 
+            width: '100%', 
+            height: '100%', 
+            objectFit: 'cover', // Corta a imagem para preencher sem distorcer
+            display: 'block'    // Remove espaços vazios na base da imagem
+          }} 
+        />
+      ) : (
+        <div style={{ padding: '20px' }}>No image available</div>
+      )}
+    </Link>
+  ) : (
+    "placeholder principal"
+  )}
+</div>
 
       <div style={{ marginTop: '30px' }}>
         <span className="accent-text">NEWS</span>
