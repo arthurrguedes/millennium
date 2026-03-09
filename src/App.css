@@ -35,7 +35,7 @@ header {
 
 .nav-links {
   display: flex;
-  gap: 25px;
+  gap: 17px;
   font-weight: bold;
   font-size: 0.9rem;
 }
@@ -43,6 +43,11 @@ header {
 .nav-links a {
   text-decoration: none;
   color: #000;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #bfa15f;
 }
 
 .search-barbox {
@@ -354,6 +359,10 @@ h1 {
 /* Para garantir que não fique roxo se já foi clicado */
 .nav-link-2025 a:visited {
   color: black !important;
+}
+
+.nav-link-2025 a:hover {
+  color: #bfa15f;
 }
 
 /* Container da busca para posicionar o dropdown */

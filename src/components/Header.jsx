@@ -121,6 +121,7 @@ export function Header() {
           </div>
         </div>
         <Link to="/stats">Stats</Link>
+        <Link to="/submit">Submit</Link>
       </nav>
       
       {/* SEÇÃO DE BUSCA - Mantendo sua estrutura original com container relativo */}
