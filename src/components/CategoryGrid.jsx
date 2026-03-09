@@ -21,7 +21,7 @@ export function CategoryGrid() {
   return (
     <section className="category-grid-section">
       <span className="accent-text">GENERAL FIELD</span>
-      <span className="sub-text">CURRENT WINNERS</span>
+      <span className="sub-text">CURRENT HOLDERS</span>
       <div className="category-grid">
         
         <CategoryItem category="ALBUM OF THE YEAR" nomination="DeBÍ TiRAR MáS FOToS" imageUrl="https://lastfm.freetls.fastly.net/i/u/500x500/7d0982b56a5e4304eb6207d6688c917a.jpg" />
