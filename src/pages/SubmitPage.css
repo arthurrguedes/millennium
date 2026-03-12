@@ -1,0 +1,158 @@
+.submit-page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.submit-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.submit-header h1 {
+  font-size: 3rem;
+  margin: 10px 0;
+  text-transform: uppercase;
+}
+
+.submit-form-card {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group.full-width {
+  grid-column: span 2;
+}
+
+.form-group label {
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: #555;
+}
+
+.submit-select, 
+.dynamic-form input, 
+.dynamic-form textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.submit-select:focus, 
+.dynamic-form input:focus, 
+.dynamic-form textarea:focus {
+  outline: none;
+  border-color: #bfa15f;
+}
+
+.dynamic-form textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+.submit-btn {
+  grid-column: span 2;
+  margin-top: 30px;
+  padding: 18px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #bfa15f;
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-group.full-width {
+    grid-column: span 1;
+  }
+  .submit-btn {
+    grid-column: span 1;
+  }
+}
+
+.submit-guidelines a {
+  color: #000;
+  text-decoration: underline;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.submit-guidelines a:hover {
+  color: #bfa15f; /* Fica dourado ao passar o mouse, como no header */
+}
+
+.success-message {
+  text-align: center;
+  padding: 40px 0;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background-color: #bfa15f;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin: 0 auto 20px;
+}
+
+.success-message h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.success-message p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.submit-btn.secondary {
+  background-color: transparent;
+  border: 2px solid #000;
+  color: #000;
+  width: auto;
+  padding: 12px 30px;
+}
+
+.submit-btn.secondary:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,2 @@
+$env:Path="C:\node;" + $env:Path
+npm.cmd run dev

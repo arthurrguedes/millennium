@@ -14,6 +14,7 @@ import { CategoryPage } from './pages/CategoryPage.jsx'
 import { NewsPage } from './pages/NewsPage.jsx'
 import { NewsArticlePage } from './pages/NewsArticlePage.jsx'
 import { AboutPage } from './pages/AboutPage.jsx'
+import { SubmitPage } from './pages/SubmitPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <HomePage />,
+      },
+      {
+        path: '/submit',
+        element: <SubmitPage />,
       },
       {
         path: '/about',

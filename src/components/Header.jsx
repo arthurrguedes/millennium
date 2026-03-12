@@ -107,6 +107,7 @@ export function Header() {
       </div>
       
       <nav className="nav-links">
+        <Link to="/submit">Submit</Link>
         <Link to="/about">About</Link>
         <Link to="/awards">Awards</Link>
         <Link to="/news">News</Link>
@@ -121,7 +122,6 @@ export function Header() {
           </div>
         </div>
         <Link to="/stats">Stats</Link>
-        <Link to="/submit">Submit</Link>
       </nav>
       
       {/* SEÇÃO DE BUSCA - Mantendo sua estrutura original com container relativo */}
