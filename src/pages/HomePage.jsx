@@ -9,8 +9,8 @@ export function HomePage() {
     <>
       <main className="main-grid">
         <HeroColumn />
+        <TopListColumn title="2025 Millennium Awards: Bad Bunny's Historic Sweep and Genre Highlights." />
         <TopListColumn title="Achievements from The 29th Millennium's Nominations: Bad Bunny, Kendrick, Lady Gaga and much more!" />
-        <TopListColumn title="Check out the artists making their debut in this 2025 ceremony." />
       </main>
 
       <CategoryGrid />
