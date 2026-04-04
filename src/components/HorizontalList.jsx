@@ -2,30 +2,28 @@ import { Link } from 'react-router-dom';
 
 // Componente de um item individual da lista
 function HorizontalItem({title, subtitle, imageUrl, href}) {
-
-const Container = href ? Link : 'div';
-  
-  // Se for link, precisa da prop 'to'. Se for div, não precisa
+  const Container = href ? Link : 'div';
   const props = href ? { to: href } : {};
 
   return (
     <Container 
       {...props} 
       className="horizontal-item"
-      // Adicionando estilos para remover o sublinhado padrão de links e arrumar o cursor
       style={{ 
         textDecoration: 'none', 
         color: 'inherit', 
         cursor: href ? 'pointer' : 'default',
-        display: 'flex', // Garante que a estrutura se mantenha
+        display: 'flex', 
         flexDirection: 'column',
         alignItems: 'center'
       }}
     >
       <img 
-        src={imageUrl ? (imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`) : "/millennium_default.png"} 
+        src={imageUrl} 
         alt={title} 
         className="circle-image"
+        // Garante que se a imagem falhar, use o padrão
+        onError={(e) => { e.target.src = "/millennium_default.png"; }}
       />
       <div className="horizontal-item-text">
         <strong>{title}</strong>
@@ -42,10 +40,8 @@ export function HorizontalList() {
   const yearsList = [];
 
   for (let year = currentYear; year >= startYear; year--) {
-    // Calcula a edição | 2025 - 1997 + 1 
     const edition = year - startYear + 1;
     
-    // Função para colocar o sufixo
     const getOrdinal = (n) => {
       const s = ["th", "st", "nd", "rd"];
       const v = n % 100;
@@ -55,7 +51,9 @@ export function HorizontalList() {
     yearsList.push({
       year: year,
       title: `${getOrdinal(edition)} Annual Millennium`,
-      href: `/awards/${year}`
+      href: `/awards/${year}`,
+      // Define o caminho da imagem baseado no ano (ex: /img-years/1997.png)
+      imageUrl: `/img-years/${year}.png` 
     });
   }
 
@@ -63,18 +61,15 @@ export function HorizontalList() {
     <section className="horizontal-list-section">
       <span className="accent-text">Time Capsule</span>
       <div className="horizontal-list-container">
-        
-        {/* Renderiza a lista com um map (loop) */}
         {yearsList.map((item) => (
           <HorizontalItem 
             key={item.year} 
             href={item.href}
             title={item.title} 
             subtitle={item.year.toString()} 
-            imageUrl="/millennium_default.png"
+            imageUrl={item.imageUrl}
           />
         ))}
-
       </div>
     </section>
   );

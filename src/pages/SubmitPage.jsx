@@ -107,7 +107,7 @@ export function SubmitPage() {
                         <option>Dance / Electronic</option>
                         <option>Latín</option>
                         <option>Global</option>
-                        <option>R&B & Soul</option>
+                        <option>R&B, Progressive & Traditional</option>
                         <option>Rap</option>
                         <option>African Music</option>
                         <option>Alternative</option>
