@@ -50,7 +50,7 @@ export function AwardsPage() {
     <div className="awards-hub-container">
       <div className="awards-header">
         <h1>AWARDS NOMINATIONS & WINNERS</h1>
-        <p>The rich history of Music's Biggest Night is at your fingertips. From Santana and Amy Winehouse to Kendrick Lamar, Lady Gaga and Bad Bunny, explore the winners and biggest moments from each MILLENNIUM Awards telecast.</p>
+        <p>The history of music's biggest night is right here. From Santana to Bad Bunny, explore the biggest moments from each awards telecast.</p>
       </div>
 
       <div className="awards-hub-grid">

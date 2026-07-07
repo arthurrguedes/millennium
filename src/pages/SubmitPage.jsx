@@ -103,17 +103,21 @@ export function SubmitPage() {
                     <div className="form-group">
                       <label>Genre / Field</label>
                       <select className="submit-select">
-                        <option>Pop</option>
+                        <option>Pop & Traditional Pop</option>
                         <option>Dance / Electronic</option>
                         <option>Latín</option>
                         <option>Global</option>
-                        <option>R&B, Progressive & Traditional</option>
-                        <option>Rap</option>
                         <option>African Music</option>
-                        <option>Alternative</option>
-                        <option>Rock & Metal</option>
+                        <option>Reggae</option>
+                        <option>R&B, Traditional R&B & Progressive R&B</option>
+                        <option>Rap & Melodic Rap</option>
+                        <option>Alternative Music</option>
+                        <option>Rock</option>
+                        <option>Metal</option>
                         <option>Country</option>
-                        <option>Jazz & Traditional Pop</option>
+                        <option>Folk</option>
+                        <option>Jazz</option>
+                        <option>Instrumental</option>
                       </select>
                     </div>
 
