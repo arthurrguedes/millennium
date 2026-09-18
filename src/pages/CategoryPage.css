@@ -122,11 +122,17 @@
   list-style: none;
   padding: 10px 0 0 0;
   margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  align-items: start;
 }
 
 .category-nominee-list li {
-  padding: 10px 0;
-  border-bottom: 1px solid #f9f9f9;
+  padding: 14px;
+  border: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0; /* substitui a linha divisória antiga */
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   line-height: 1.4;
@@ -138,9 +144,13 @@
 
 .nominee-info {
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 8px;
+}
+
+.category-page-container .nominee-info {
+  align-content: flex-start;
 }
 
 .nominee-info a.bold-link {
@@ -161,6 +171,15 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   line-height: 1;
+}
+
+/* Ajustes específicos do grid da CategoryPage — não afeta outras páginas */
+.category-page-container .winner-label {
+  display: inline-block;
+  width: auto;
+  max-width: max-content;
+  flex: none;
+  align-self: flex-start;
 }
 
 .nominee-credits {

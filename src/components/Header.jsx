@@ -102,7 +102,7 @@ export function Header() {
       
       <div style={{ fontWeight: 'bold' }}>
         <nav>
-          <Link to="/awards/2025" className="nav-link-2025">2025 Nominees & Winners</Link>
+          <Link to="/awards/2025" className="nav-link-2025">2025 Winners & Nominees</Link>
         </nav>
       </div>
       

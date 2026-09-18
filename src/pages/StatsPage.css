@@ -120,3 +120,26 @@
   color: #bfa15f;
   flex-shrink: 0;
 }
+
+.year-filter {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.year-filter label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.year-filter select {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}

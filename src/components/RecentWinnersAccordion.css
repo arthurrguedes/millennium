@@ -1,0 +1,81 @@
+.recent-winners-section {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.recent-winners-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #111;
+  padding-bottom: 0.5rem;
+}
+
+.field-accordion {
+  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 0.5rem;
+}
+
+.accordion-summary {
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 1rem 0;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.accordion-summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion-summary::after {
+  content: '+';
+  font-size: 1.5rem;
+}
+
+.field-accordion[open] .accordion-summary::after {
+  content: '−';
+}
+
+.accordion-summary:hover {
+  color: #c6ac4f;
+}
+
+.accordion-body {
+  padding-bottom: 1.5rem;
+}
+
+/* --- ALTERADO AQUI PARA FICAR LADO A LADO --- */
+.winners-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;         /* Ativa o Flexbox */
+  flex-wrap: wrap;       /* Permite quebrar linha se não couber tudo na mesma linha */
+  gap: 2rem 1.5rem;      /* Espaçamento entre as linhas (2rem) e colunas (1.5rem) */
+}
+
+.winners-list li {
+  padding-left: 1rem;
+  border-left: 3px solid #c6ac4f;
+  flex: 1 1 280px;       /* Ocupa pelo menos 280px de largura e distribui o espaço */
+  max-width: 350px;      /* Define um tamanho máximo elegante para cada bloco */
+  box-sizing: border-box;
+}
+
+.winners-list strong {
+  display: block;
+  font-size: 0.92rem;
+  color: #222;
+  margin-bottom: 0.2rem;
+}
+
+.winners-list span {
+  font-size: 0.92rem;
+  color: #666;
+}
+

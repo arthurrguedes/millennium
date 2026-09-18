@@ -57,7 +57,7 @@ export function AwardsPage() {
         {years.map((year) => (
           <div key={year} className="year-card">
             <h2>{year}</h2>
-            <ul className="winners-list">
+            <ul className="winners">
               {groupedData[year].map((winner) => {
                 
                 // Verificação se é uma categoria de artista
@@ -65,6 +65,7 @@ export function AwardsPage() {
                   winner.category === 'Artist Of The Year' ||
                   winner.category === 'Best New Artist' ||
                   winner.category === 'Producer Of The Year' ||
+                  winner.category === 'Diamond Icon Award' ||
                   winner.category === 'Songwriter Of The Year';
 
                 return (

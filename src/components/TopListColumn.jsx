@@ -27,7 +27,7 @@ export function TopListColumn({ title }) {
       </div>
       
       <div style={{ marginTop: '30px' }}>
-        <span className="accent-text">HIGHLIGHTS</span>
+        <span className="accent-text">SEE MORE</span>
         <div className="news-item">
           {article ? (
             <Link to={`/news/${article.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>

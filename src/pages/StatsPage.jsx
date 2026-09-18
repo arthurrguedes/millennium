@@ -1,5 +1,5 @@
 // src/pages/StatsPage.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import './StatsPage.css'; 
 
@@ -26,14 +26,21 @@ function flattenCreditsToString(creditData) {
 }
 
 export function StatsPage() {
+  // Estados dos dados globais e de filtro
+  const [allData, setAllData] = useState([]);
+  const [availableYears, setAvailableYears] = useState([]);
+  const [selectedYear, setSelectedYear] = useState('All');
+  
+  // Estados das tabelas
   const [topWinners, setTopWinners] = useState([]);
   const [topNominees, setTopNominees] = useState([]);
   const [topGeneralWinners, setTopGeneralWinners] = useState([]);
-  const [topGeneralNominees, setTopGeneralNominees] = useState([]); // Novo estado
+  const [topGeneralNominees, setTopGeneralNominees] = useState([]);
+  
   const [loading, setLoading] = useState(true);
   const [openAccordion, setOpenAccordion] = useState('wins');
 
-  const processNames = (namesString, countsObject) => {
+  const processNames = useCallback((namesString, countsObject) => {
     const flatNamesString = flattenCreditsToString(namesString);
     if (!flatNamesString || flatNamesString === '—') return;
     const namesArray = flatNamesString.split(',').map(name => name.trim());
@@ -42,92 +49,21 @@ export function StatsPage() {
         countsObject[name] = (countsObject[name] || 0) + 1;
       }
     });
-  };
+  }, []);
 
+  // 1. Busca os dados iniciais e configura os anos disponíveis
   useEffect(() => {
     fetch('/db.json')
       .then((res) => res.json())
       .then((data) => {
-        const winCounts = {};
-        const nomCounts = {};
-        const generalWinCounts = {}; 
-        const generalNomCounts = {}; // Novo contador
+        setAllData(data);
         
-        data.forEach(item => {
-          // Indicações Gerais (All Fields)
-          processNames(item.main_artist, nomCounts);
-          processNames(item.producer, nomCounts);
-          processNames(item.songwriters, nomCounts);
-          processNames(item.technical, nomCounts);
-          processNames(item.director, nomCounts);
-
-          // Filtro para General Field (Indicações)
-          if (item.field === 'General Field') {
-            processNames(item.main_artist, generalNomCounts);
-            processNames(item.producer, generalNomCounts);
-            processNames(item.songwriters, generalNomCounts);
-            processNames(item.technical, generalNomCounts);
-            processNames(item.director, generalNomCounts);
-          }
+        // Extrai os anos, remove nulos/indefinidos e ordena de forma decrescente
+        const years = [...new Set(data.map(item => item.year))]
+          .filter(Boolean)
+          .sort((a, b) => b - a);
           
-          if (item.defining_awards && Array.isArray(item.defining_awards)) {
-            for (const subAward of item.defining_awards) {
-              processNames(subAward.producer, nomCounts);
-              processNames(subAward.songwriters, nomCounts);
-              processNames(subAward.director, nomCounts);
-              
-              if (item.field === 'General Field') {
-                processNames(subAward.producer, generalNomCounts);
-                processNames(subAward.songwriters, generalNomCounts);
-                processNames(subAward.director, generalNomCounts);
-              }
-            }
-          }
-        });
-
-        // Cálculo de Vencedores
-        const winners = data.filter(item => item.result === 'Winner');
-        winners.forEach(item => {
-          processNames(item.main_artist, winCounts);
-          processNames(item.producer, winCounts);
-          processNames(item.songwriters, winCounts);
-          processNames(item.technical, winCounts);
-          processNames(item.director, winCounts);
-          
-          if (item.field === 'General Field') {
-            processNames(item.main_artist, generalWinCounts);
-            processNames(item.producer, generalWinCounts);
-            processNames(item.songwriters, generalWinCounts);
-            processNames(item.technical, generalWinCounts);
-            processNames(item.director, generalWinCounts);
-          }
-
-          if (item.defining_awards && Array.isArray(item.defining_awards)) {
-            for (const subAward of item.defining_awards) {
-              processNames(subAward.producer, winCounts);
-              processNames(subAward.songwriters, winCounts);
-              processNames(subAward.director, winCounts);
-              
-              if (item.field === 'General Field') {
-                processNames(subAward.producer, generalWinCounts);
-                processNames(subAward.songwriters, generalWinCounts);
-                processNames(subAward.director, generalWinCounts);
-              }
-            }
-          }
-        });
-
-        // Ordenação e Estados
-        const sortLimit = (counts) => Object.entries(counts)
-          .map(([name, count]) => ({ name, count }))
-          .sort((a, b) => b.count - a.count)
-          .slice(0, 10);
-
-        setTopWinners(sortLimit(winCounts));
-        setTopNominees(sortLimit(nomCounts));
-        setTopGeneralWinners(sortLimit(generalWinCounts));
-        setTopGeneralNominees(sortLimit(generalNomCounts)); // Define o novo estado
-
+        setAvailableYears(years);
         setLoading(false);
       })
       .catch((err) => {
@@ -135,6 +71,97 @@ export function StatsPage() {
         setLoading(false);
       });
   }, []); 
+
+  // 2. Recalcula as estatísticas sempre que allData ou selectedYear mudarem
+  useEffect(() => {
+    if (allData.length === 0) return;
+
+    // Filtra os dados com base no ano escolhido
+    const dataToProcess = selectedYear === 'All' 
+      ? allData 
+      : allData.filter(item => item.year === parseInt(selectedYear, 10));
+
+    const winCounts = {};
+    const nomCounts = {};
+    const generalWinCounts = {}; 
+    const generalNomCounts = {};
+    
+    dataToProcess.forEach(item => {
+      // Indicações Gerais (All Fields)
+      processNames(item.main_artist, nomCounts);
+      processNames(item.producer, nomCounts);
+      processNames(item.songwriters, nomCounts);
+      processNames(item.technical, nomCounts);
+      processNames(item.director, nomCounts);
+
+      // Filtro para General Field (Indicações)
+      if (item.field === 'General Field') {
+        processNames(item.main_artist, generalNomCounts);
+        processNames(item.producer, generalNomCounts);
+        processNames(item.songwriters, generalNomCounts);
+        processNames(item.technical, generalNomCounts);
+        processNames(item.director, generalNomCounts);
+      }
+      
+      if (item.defining_awards && Array.isArray(item.defining_awards)) {
+        for (const subAward of item.defining_awards) {
+          processNames(subAward.producer, nomCounts);
+          processNames(subAward.songwriters, nomCounts);
+          processNames(subAward.director, nomCounts);
+          
+          if (item.field === 'General Field') {
+            processNames(subAward.producer, generalNomCounts);
+            processNames(subAward.songwriters, generalNomCounts);
+            processNames(subAward.director, generalNomCounts);
+          }
+        }
+      }
+    });
+
+    // Cálculo de Vencedores
+    const winners = dataToProcess.filter(item => item.result === 'Winner');
+    winners.forEach(item => {
+      processNames(item.main_artist, winCounts);
+      processNames(item.producer, winCounts);
+      processNames(item.songwriters, winCounts);
+      processNames(item.technical, winCounts);
+      processNames(item.director, winCounts);
+      
+      if (item.field === 'General Field') {
+        processNames(item.main_artist, generalWinCounts);
+        processNames(item.producer, generalWinCounts);
+        processNames(item.songwriters, generalWinCounts);
+        processNames(item.technical, generalWinCounts);
+        processNames(item.director, generalWinCounts);
+      }
+
+      if (item.defining_awards && Array.isArray(item.defining_awards)) {
+        for (const subAward of item.defining_awards) {
+          processNames(subAward.producer, winCounts);
+          processNames(subAward.songwriters, winCounts);
+          processNames(subAward.director, winCounts);
+          
+          if (item.field === 'General Field') {
+            processNames(subAward.producer, generalWinCounts);
+            processNames(subAward.songwriters, generalWinCounts);
+            processNames(subAward.director, generalWinCounts);
+          }
+        }
+      }
+    });
+
+    // Ordenação e Estados
+    const sortLimit = (counts) => Object.entries(counts)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+
+    setTopWinners(sortLimit(winCounts));
+    setTopNominees(sortLimit(nomCounts));
+    setTopGeneralWinners(sortLimit(generalWinCounts));
+    setTopGeneralNominees(sortLimit(generalNomCounts));
+
+  }, [allData, selectedYear, processNames]); // Re-executa se essas dependências mudarem
 
   const handleAccordionClick = (key) => {
     setOpenAccordion(openAccordion === key ? null : key);
@@ -146,13 +173,28 @@ export function StatsPage() {
     <div className="stats-page-container">
       <div className="awards-header">
         <h1>Millennium Statistics</h1>
-        <p>All-time rankings for the most awarded and nominated individuals.</p>
+        <p>Rankings for the most awarded and nominated individuals.</p>
+        
+        {/* FILTRO DE ANO ADICIONADO AQUI */}
+        <div className="year-filter">
+          <label htmlFor="year-select">Filter by Year:</label>
+          <select 
+            id="year-select" 
+            value={selectedYear} 
+            onChange={(e) => setSelectedYear(e.target.value)}
+          >
+            <option value="All">All-Time (All Years)</option>
+            {availableYears.map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Wins Accordion */}
       <div className="ranking-section-accordion">
         <button className={`accordion-toggle ${openAccordion === 'wins' ? 'active' : ''}`} onClick={() => handleAccordionClick('wins')}>
-          <h2>Top 10 - Most Wins (All Fields)</h2>
+          <h2>Top 10 - Most Wins {selectedYear !== 'All' ? `(${selectedYear})` : '(All Fields)'}</h2>
           <span className="toggle-icon">{openAccordion === 'wins' ? '▾' : '▸'}</span>
         </button>
         {openAccordion === 'wins' && (
@@ -166,10 +208,10 @@ export function StatsPage() {
         )}
       </div>
 
-            {/* Nominations Accordion */}
+      {/* Nominations Accordion */}
       <div className="ranking-section-accordion">
         <button className={`accordion-toggle ${openAccordion === 'noms' ? 'active' : ''}`} onClick={() => handleAccordionClick('noms')}>
-          <h2>Top 10 - Most Nominations (All Fields)</h2>
+          <h2>Top 10 - Most Nominations {selectedYear !== 'All' ? `(${selectedYear})` : '(All Fields)'}</h2>
           <span className="toggle-icon">{openAccordion === 'noms' ? '▾' : '▸'}</span>
         </button>
         {openAccordion === 'noms' && (
@@ -186,7 +228,7 @@ export function StatsPage() {
       {/* General Wins Accordion */}
       <div className="ranking-section-accordion">
         <button className={`accordion-toggle ${openAccordion === 'general' ? 'active' : ''}`} onClick={() => handleAccordionClick('general')}>
-          <h2>Top 10 - Most General Field Wins</h2>
+          <h2>Top 10 - Most General Field Wins {selectedYear !== 'All' ? `(${selectedYear})` : ''}</h2>
           <span className="toggle-icon">{openAccordion === 'general' ? '▾' : '▸'}</span>
         </button>
         {openAccordion === 'general' && (
@@ -200,10 +242,10 @@ export function StatsPage() {
         )}
       </div>
 
-      {/* NOVO: General Nominations Accordion */}
+      {/* General Nominations Accordion */}
       <div className="ranking-section-accordion">
         <button className={`accordion-toggle ${openAccordion === 'general_noms' ? 'active' : ''}`} onClick={() => handleAccordionClick('general_noms')}>
-          <h2>Top 10 - Most General Field Nominations</h2>
+          <h2>Top 10 - Most General Field Nominations {selectedYear !== 'All' ? `(${selectedYear})` : ''}</h2>
           <span className="toggle-icon">{openAccordion === 'general_noms' ? '▾' : '▸'}</span>
         </button>
         {openAccordion === 'general_noms' && (

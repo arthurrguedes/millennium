@@ -8,7 +8,7 @@
 .year-card {
   background-color: #fdfdfd;
   border: 1px solid #eee;
-  padding: 25px;
+  padding: 5px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -16,30 +16,33 @@
 
 .year-card h2 {
   font-size: 2rem;
-  color: #bfa15f; /* Cor dourada */
   margin-top: 0;
   margin-bottom: 20px;
+  padding-left: 15px; /* Adiciona espaçamento ao título */
 }
 
-.winners-list {
+.winners {
   list-style: none;
   padding: 0;
   margin: 0;
-  flex-grow: 1; /* Faz a lista crescer para empurrar o botão para baixo */
+  flex-grow: 1;
+  padding-left: 15px; /* Adiciona espaçamento geral à lista */
 }
 
-.winners-list li {
-  margin-bottom: 15px;
+.winners li {
+  margin-bottom: 15px; /* Aumentei um pouco para não ficar "colado" verticalmente */
   line-height: 1.4;
+  border-left: 3px solid #bfa15f; /* Adiciona a linha dourada lateral */
+  padding-left: 12px; /* Espaço entre a linha dourada e o texto */
 }
 
-.winners-list li strong {
+.winners li strong {
   display: block;
-  font-size: 0.9rem;
+  font-size: 0.95rem; /* Ajuste leve no tamanho */
   color: #333;
 }
 
-.winners-list li span {
+.winners li span {
   font-size: 0.9rem;
   color: #666;
 }
